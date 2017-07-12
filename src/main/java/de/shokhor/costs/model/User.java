@@ -8,27 +8,37 @@ import java.util.List;
 /**
  * Created by user on 08.07.2017.
  */
+@NamedQueries({
+        @NamedQuery(name = User.DELETE, query = "DELETE FROM User u WHERE u.id=:id"),
+        @NamedQuery(name = User.ALL_SORTED, query = "SELECT u FROM User u ORDER BY u.sirname"),
+        @NamedQuery(name = User.BY_EMAIL, query = "SELECT u FROM User u WHERE u.email=:email")
+})
+
 @Entity
-@Table(name = "users")
+@Table(name = "user")
 public class User extends BaseEntity {
 
-    @Column(name = "FirstName")
+    public static final String DELETE = "User.delete";
+    public static final String ALL_SORTED = "User.getAll";
+    public static final String BY_EMAIL = "User.getByEmail";
+
+    @Column(name = "firstName")
     @NotNull
     private String firstName;
 
-    @Column(name = "Sirname")
+    @Column(name = "sirname")
     @NotNull
     private String sirname;
 
-    @Column(name = "Email")
+    @Column(name = "email")
     @NotNull
     private String email;
 
-    @Column(name = "Age")
+    @Column(name = "age")
     @NotNull
     private int age;
 
-    @Column(name = "Password")
+    @Column(name = "password")
     private String password;
 
     @Column(name = "registred")
@@ -42,10 +52,13 @@ public class User extends BaseEntity {
     @OneToMany(mappedBy = "user")
     private List<Cost> costs;
 
+    @OneToMany(mappedBy = "user")
+    private List<Group> groups;
+
     public User() {
     }
 
-    public User(int id, String firstName, String sirname, String email, int age, String password, Date registred, Role role, List<Cost> costs) {
+    public User(int id, String firstName, String sirname, String email, int age, String password, Date registred, Role role, List<Cost> costs, List<Group> groups) {
         super(id);
         this.firstName = firstName;
         this.sirname = sirname;
@@ -55,6 +68,7 @@ public class User extends BaseEntity {
         this.registred = registred;
         this.role = role;
         this.costs = costs;
+        this.groups=groups;
     }
 
     public String getFirstName() {

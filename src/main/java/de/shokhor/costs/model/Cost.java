@@ -1,55 +1,64 @@
 package de.shokhor.costs.model;
 
+
 import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 /**
  * Created by user on 08.07.2017.
  */
+@NamedQueries({
+    @NamedQuery(name = Cost.DELETE, query = "DELETE FROM Cost c WHERE c.id=:id AND c.user.id=:userId"),
+    @NamedQuery(name = Cost.ALL_SORTED, query = "SELECT c FROM Cost c WHERE c.user.id=:userId ORDER BY c.date"),
+    @NamedQuery(name = Cost.BY_GROUP, query = "SELECT c FROM Cost c WHERE c.user.id=:userId AND c.group.id=:groupId")
+})
 @Entity
-@Table(name = "costs")
+@Table(name = "cost")
 public class Cost extends BaseEntity {
 
-    @Column(name = "Name")
-    @NotNull
-    private String name;
+    public static final String DELETE = "Cost.delete";
+    public static final String ALL_SORTED = "Cost.getAll";
+    public static final String BY_GROUP = "Cost.getByGroup";
 
-    @Column(name = "Price")
+
+    @Column(name = "price")
     @NotNull
     private double price;
 
-    @Column(name = "Date")
+    @Column(name = "date")
     @NotNull
     private LocalDateTime date;
 
     @ManyToOne
-    @JoinColumn(name = "User_idUser")
+    @JoinColumn(name = "user_id")
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "Groups_idGroups")
+    @JoinColumn(name = "group_id")
     private Group group;
 
     public Cost() {
     }
 
-    public Cost(int id, String name, double price, LocalDateTime date, User user, Group group) {
+    public Cost(int id, double price, LocalDateTime date, User user, Group group) {
         super(id);
-        this.name = name;
         this.price = price;
         this.date = date;
         this.user = user;
         this.group = group;
     }
 
-    public String getName() {
-        return name;
+    public Cost(Integer id, double price, LocalDateTime date) {
+        super(id);
+        this.price = price;
+        this.date = date;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
 
     public double getPrice() {
         return price;
@@ -82,4 +91,6 @@ public class Cost extends BaseEntity {
     public void setGroup(Group group) {
         this.group = group;
     }
+
+
 }

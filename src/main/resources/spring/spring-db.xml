@@ -28,7 +28,7 @@
 
         <bean id="dataSource"
               class="org.apache.tomcat.jdbc.pool.DataSource"
-              p:driverClassName="org.postgresql.Driver"
+              p:driverClassName="com.mysql.jdbc.Driver"
               p:url="${database.url}"
               p:username="${database.username}"
               p:password="${database.password}"/>
@@ -80,7 +80,7 @@
     </beans>
 
     <beans profile="jpa">
-        <context:component-scan base-package="de.shokhor.**.repository"/>
+        <context:component-scan base-package="de.shokhor.**.repository.Jpa"/>
     </beans>
 
 

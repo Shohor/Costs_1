@@ -12,7 +12,7 @@ import javax.persistence.MappedSuperclass;
 public class BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    protected int id;
+    protected Integer id;
 
     public BaseEntity() {
     }
@@ -21,11 +21,16 @@ public class BaseEntity {
         this.id=id;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
+    }
+
+    public boolean isNew()
+    {
+        return (getId()== null);
     }
 }

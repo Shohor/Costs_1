@@ -6,7 +6,7 @@ DROP TABLE IF EXISTS user;
 CREATE TABLE user
 (
   id INT PRIMARY KEY AUTO_INCREMENT,
-  firsName VARCHAR(45) NOT NULL,
+  firstName VARCHAR(45) NOT NULL,
   sirname VARCHAR(45) NOT NULL,
   email VARCHAR(45) NOT NULL,
   age INT,
@@ -26,9 +26,11 @@ CREATE TABLE roles
 CREATE TABLE groups
 (
   id INT PRIMARY KEY AUTO_INCREMENT,
-  group_cost VARCHAR(45) NOT NULL
+  user_id INT NOT NULL,
+  group_cost VARCHAR(45) NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE
+
 );
-CREATE UNIQUE INDEX group_unique_idx ON groups(group_cost);
 
 CREATE TABLE cost
 (

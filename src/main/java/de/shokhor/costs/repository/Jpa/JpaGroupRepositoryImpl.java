@@ -1,9 +1,12 @@
 package de.shokhor.costs.repository.Jpa;
 
 import de.shokhor.costs.model.Group;
+import de.shokhor.costs.model.User;
 import de.shokhor.costs.repository.GroupRepository;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.List;
 
 /**
@@ -11,19 +14,43 @@ import java.util.List;
  */
 @Repository
 public class JpaGroupRepositoryImpl implements GroupRepository {
-    public Group save(Group group) {
-        return null;
+
+    @PersistenceContext
+    private EntityManager em;
+
+    public Group save(Group group, int userId)
+    {
+        group.setUser(em.getReference(User.class, userId));
+        if (group.isNew())
+        {
+            em.persist(group);
+            return group;
+        }
+        else
+        {
+            return em.merge(group);
+        }
     }
 
-    public boolean delete(int groupId) {
-        return false;
+    public boolean delete(int groupId, int userId)
+    {
+        return em.createNamedQuery(Group.DELETE)
+                .setParameter("id", groupId)
+                .setParameter("userId", userId)
+                .executeUpdate()!=0;
     }
 
-    public Group get(int groupId) {
-        return null;
+    public Group get(int groupId, int userId)
+    {
+
+        Group group = em.find(Group.class, groupId);
+        return group!=null && group.getUser().getId()==userId ? group: null;
     }
 
-    public List<Group> getAll() {
-        return null;
+    public List<Group> getAll(int userId)
+    {
+        return em.createNamedQuery(Group.ALL,Group.class)
+                .setParameter("userId", userId)
+                .getResultList();
     }
 }
