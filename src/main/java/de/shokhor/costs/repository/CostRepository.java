@@ -9,7 +9,7 @@ import java.util.List;
  */
 public interface CostRepository
 {
-    Cost save (Cost cost, int userId);
+    Cost save (Cost cost, int userId, int groupId);
 
     boolean delete (int costId, int userId);
 

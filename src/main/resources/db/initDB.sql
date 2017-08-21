@@ -37,9 +37,10 @@ CREATE TABLE cost
   id INT PRIMARY KEY AUTO_INCREMENT,
   price DOUBLE NOT NULL,
   date DATE NOT NULL,
+  description VARCHAR(255),
   user_id INT NOT NULL,
   group_id INT NOT NULL,
-  FOREIGN KEY (group_id) REFERENCES groups(id),
+  FOREIGN KEY (group_id) REFERENCES groups(id) ON DELETE CASCADE ,
   FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE
 
 );

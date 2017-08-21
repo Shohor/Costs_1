@@ -1,9 +1,11 @@
 package de.shokhor.costs.repository.Jpa;
 
 import de.shokhor.costs.model.Cost;
+import de.shokhor.costs.model.Group;
 import de.shokhor.costs.model.User;
 import de.shokhor.costs.repository.CostRepository;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -13,13 +15,16 @@ import java.util.List;
  * Created by user on 10.07.2017.
  */
 @Repository
-public class JpaCostRepsitoryImpl implements CostRepository {
+public class JpaCostRepositoryImpl implements CostRepository {
 
     @PersistenceContext
     private EntityManager em;
 
-    public Cost save(Cost cost, int userId) {
+    @Override
+    @Transactional
+    public Cost save(Cost cost, int userId, int groupId) {
 
+        cost.setGroup(em.getReference(Group.class,groupId));
         cost.setUser(em.getReference(User.class, userId));
         if (cost.isNew())
         {
@@ -31,8 +36,11 @@ public class JpaCostRepsitoryImpl implements CostRepository {
         }
     }
 
+    @Override
+    @Transactional
     public boolean delete(int costId, int userId)
     {
+
         return em.createNamedQuery(Cost.DELETE)
                 .setParameter("id",costId)
                 .setParameter("userId", userId)

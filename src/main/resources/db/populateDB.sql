@@ -6,7 +6,8 @@ TRUNCATE cost;
 SET FOREIGN_KEY_CHECKS = 1;
 
 INSERT INTO user (firstName, sirname, email, age, password, registred) VALUES
-  ('llya', 'Shokhor', 'shohor@mail.ru', 34, 'Shish1983', '2017-01-01 10:00:00'),
+  ('Ilya', 'Shokhor', 'shohor@mail.ru', 34, 'Shish1983', '2017-01-01 10:00:00'),
+  ('Irina', 'Ivanova', 'ivanova@list.ru', 33, 'Russia1984', '2017-01-01 10:00:00'),
   ('Natalia', 'Kozlovskaya', 'natashik84@list.ru', 33, 'Russia1984', '2017-01-01 10:00:00');
 
 INSERT INTO groups (user_id, group_cost) VALUES
@@ -24,7 +25,7 @@ INSERT INTO roles (user_id, role) VALUES
 INSERT INTO cost (price, date, user_id, group_id) VALUES
   (23.25, '2017-01-01 10:00:00', 2, 1),
   (55.45, '2017-01-01 10:00:00', 2, 3),
-  (47.78, '2017-01-02 10:00:00', 2, 2),
+  (47.78, '2017-01-02 10:00:00', 2, 1),
   (8.21, '2017-01-02 10:00:00', 2, 1),
   (24.56, '2017-01-03 10:00:00', 2, 1),
   (11.66, '2017-01-04 10:00:00', 1, 4),

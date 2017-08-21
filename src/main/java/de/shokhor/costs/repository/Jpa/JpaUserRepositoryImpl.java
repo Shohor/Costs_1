@@ -3,8 +3,10 @@ package de.shokhor.costs.repository.Jpa;
 import de.shokhor.costs.model.User;
 import de.shokhor.costs.repository.UserRepository;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.List;
 
 /**
@@ -13,8 +15,10 @@ import java.util.List;
 @Repository
 public class JpaUserRepositoryImpl implements UserRepository {
 
+    @PersistenceContext
     private EntityManager em;
 
+    @Transactional
     public User save(User user) {
         if (user.isNew()) {
             em.persist(user);
@@ -26,6 +30,7 @@ public class JpaUserRepositoryImpl implements UserRepository {
         }
     }
 
+    @Transactional
     public boolean delete(int userId)
     {
         return em.createNamedQuery(User.DELETE)

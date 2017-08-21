@@ -1,5 +1,7 @@
 package de.shokhor.costs.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -26,14 +28,14 @@ public class Group extends BaseEntity {
     @OneToMany (mappedBy = "group")
     private List<Cost> costs;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User user;
 
     public Group() {
     }
 
-    public Group(int id, String group) {
+    public Group(Integer id, String group) {
         super(id);
         this.group = group;
     }

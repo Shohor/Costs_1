@@ -34,23 +34,34 @@ public class Cost extends BaseEntity {
     @NotNull
     private LocalDateTime date;
 
-    @ManyToOne
+    @Column(name = "description")
+    private String description;
+
+    @ManyToOne (fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToOne
+    @ManyToOne (fetch = FetchType.EAGER)
     @JoinColumn(name = "group_id")
     private Group group;
 
     public Cost() {
     }
 
-    public Cost(int id, double price, LocalDateTime date, User user, Group group) {
+    public Cost(int id, double price, LocalDateTime date, String description, User user, Group group) {
         super(id);
         this.price = price;
         this.date = date;
         this.user = user;
         this.group = group;
+        this.description = description;
+    }
+
+    public Cost(Integer id, double price, LocalDateTime date, String description) {
+        super(id);
+        this.price = price;
+        this.date = date;
+        this.description = description;
     }
 
     public Cost(Integer id, double price, LocalDateTime date) {
@@ -59,6 +70,17 @@ public class Cost extends BaseEntity {
         this.date = date;
     }
 
+    public Cost(LocalDateTime localDateTime) {
+        this.id=null;
+        this.date=localDateTime;
+    }
+
+    public Cost(Integer id, LocalDateTime date, int price, String description) {
+        super(id);
+        this.date=date;
+        this.price=price;
+        this.description=description;
+    }
 
     public double getPrice() {
         return price;
@@ -92,5 +114,11 @@ public class Cost extends BaseEntity {
         this.group = group;
     }
 
+    public String getDescription() {
+        return description;
+    }
 
+    public void setDescription(String description) {
+        this.description = description;
+    }
 }

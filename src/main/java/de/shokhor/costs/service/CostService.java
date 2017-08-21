@@ -9,9 +9,9 @@ import java.util.List;
  */
 public interface CostService {
 
-    Cost save (Cost cost, int userId);
+    Cost save (Cost cost, int userId, int groupId);
 
-    Cost update (Cost cost, int userId);
+    Cost update (Cost cost, int userId, int groupId);
 
     boolean delete (int costId, int userId);
 

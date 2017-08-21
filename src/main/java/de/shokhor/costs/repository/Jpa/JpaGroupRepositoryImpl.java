@@ -4,6 +4,7 @@ import de.shokhor.costs.model.Group;
 import de.shokhor.costs.model.User;
 import de.shokhor.costs.repository.GroupRepository;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -18,6 +19,7 @@ public class JpaGroupRepositoryImpl implements GroupRepository {
     @PersistenceContext
     private EntityManager em;
 
+    @Transactional
     public Group save(Group group, int userId)
     {
         group.setUser(em.getReference(User.class, userId));
@@ -32,6 +34,7 @@ public class JpaGroupRepositoryImpl implements GroupRepository {
         }
     }
 
+    @Transactional
     public boolean delete(int groupId, int userId)
     {
         return em.createNamedQuery(Group.DELETE)

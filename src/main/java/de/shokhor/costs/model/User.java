@@ -1,9 +1,15 @@
 package de.shokhor.costs.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.util.EnumSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by user on 08.07.2017.
@@ -42,23 +48,36 @@ public class User extends BaseEntity {
     private String password;
 
     @Column(name = "registred")
-    private Date registred =new Date();
+    private LocalDateTime registred;
 
     @Enumerated(EnumType.STRING)
-    @CollectionTable(name = "roles", joinColumns = @JoinColumn(name = "User_idUser"))
+    @CollectionTable(name = "roles", joinColumns = @JoinColumn(name = "user_id"))
     @Column(name = "Role")
-    private Role role;
+    @ElementCollection(fetch = FetchType.EAGER)
+    private Set<Role> role;
 
     @OneToMany(mappedBy = "user")
+    @JsonIgnore
     private List<Cost> costs;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    @JsonIgnore
     private List<Group> groups;
 
     public User() {
     }
 
-    public User(int id, String firstName, String sirname, String email, int age, String password, Date registred, Role role, List<Cost> costs, List<Group> groups) {
+    public User(int id, String firstName, String sirname, String email, int age, String password, Role role, Role... roles) {
+        super(id);
+        this.firstName = firstName;
+        this.sirname = sirname;
+        this.email = email;
+        this.age = age;
+        this.password = password;
+        EnumSet.of(role,roles);
+    }
+
+    public User(int id, String firstName, String sirname, String email, int age, String password, LocalDateTime registred, Set<Role> role, List<Cost> costs, List<Group> groups) {
         super(id);
         this.firstName = firstName;
         this.sirname = sirname;
@@ -71,6 +90,17 @@ public class User extends BaseEntity {
         this.groups=groups;
     }
 
+    public User(int id, String firstName, String sirname, String email, int age, String password, LocalDateTime registred, Role role, Role...roles) {
+        super(id);
+        this.firstName = firstName;
+        this.sirname = sirname;
+        this.email = email;
+        this.age = age;
+        this.password = password;
+        this.registred = registred;
+        EnumSet.of(role,roles);
+    }
+
     public String getFirstName() {
         return firstName;
     }
@@ -81,6 +111,7 @@ public class User extends BaseEntity {
 
     public String getSirname() {
         return sirname;
+
     }
 
     public void setSirname(String sirname) {
@@ -103,11 +134,11 @@ public class User extends BaseEntity {
         this.age = age;
     }
 
-    public Role getRole() {
+    public Set<Role> getRole() {
         return role;
     }
 
-    public void setRole(Role role) {
+    public void setRole(Set<Role> role) {
         this.role = role;
     }
 
@@ -119,11 +150,11 @@ public class User extends BaseEntity {
         this.password = password;
     }
 
-    public Date getRegistred() {
+    public LocalDateTime getRegistred() {
         return registred;
     }
 
-    public void setRegistred(Date registred) {
+    public void setRegistred(LocalDateTime registred) {
         this.registred = registred;
     }
 
@@ -133,5 +164,13 @@ public class User extends BaseEntity {
 
     public void setCosts(List<Cost> costs) {
         this.costs = costs;
+    }
+
+    public List<Group> getGroups() {
+        return groups;
+    }
+
+    public void setGroups(List<Group> groups) {
+        this.groups = groups;
     }
 }

@@ -17,13 +17,13 @@ public class CostServiceImpl implements CostService {
     private CostRepository repository;
 
     @Override
-    public Cost save(Cost cost, int userId) {
-        return repository.save(cost,userId);
+    public Cost save(Cost cost, int userId, int groupId) {
+        return repository.save(cost,userId,groupId);
     }
 
     @Override
-    public Cost update(Cost cost, int userId) {
-        return repository.save(cost,userId);
+    public Cost update(Cost cost, int userId, int groupId) {
+        return repository.save(cost,userId,groupId);
     }
 
     @Override

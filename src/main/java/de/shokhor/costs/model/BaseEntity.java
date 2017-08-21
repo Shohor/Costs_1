@@ -1,5 +1,7 @@
 package de.shokhor.costs.model;
 
+import org.hibernate.Hibernate;
+
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -11,13 +13,13 @@ import javax.persistence.MappedSuperclass;
 @MappedSuperclass
 public class BaseEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Integer id;
 
     public BaseEntity() {
     }
 
-    public BaseEntity(int id){
+    public BaseEntity(Integer id){
         this.id=id;
     }
 
@@ -32,5 +34,23 @@ public class BaseEntity {
     public boolean isNew()
     {
         return (getId()== null);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || !getClass().equals(Hibernate.getClass(o))) {
+            return false;
+        }
+        BaseEntity that = (BaseEntity) o;
+
+        return null != getId() && getId().equals(that.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return (getId() == null) ? 0 : getId();
     }
 }
