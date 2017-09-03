@@ -10,7 +10,7 @@ import java.util.List;
 @RequestMapping (value = RestUserController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 public class RestUserController extends AbstractUserController {
 
-    static final String REST_URL = "/rest/users";
+    static final String REST_URL = "/rest/admin/users";
 
     @GetMapping("/{id}")
     public User get (@PathVariable("id") int id)

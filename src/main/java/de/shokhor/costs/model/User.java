@@ -1,11 +1,10 @@
 package de.shokhor.costs.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.EnumSet;
 import java.util.List;
@@ -45,9 +44,12 @@ public class User extends BaseEntity {
     private int age;
 
     @Column(name = "password")
+    @NotNull
+    @Size(min = 5, max = 64, message = " must between 5 and 64 characters")
     private String password;
 
     @Column(name = "registred")
+    @NotNull
     private LocalDateTime registred;
 
     @Enumerated(EnumType.STRING)
@@ -62,22 +64,23 @@ public class User extends BaseEntity {
 
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     @JsonIgnore
-    private List<Group> groups;
+    private List<CostGroup> costGroups;
 
     public User() {
     }
 
-    public User(int id, String firstName, String sirname, String email, int age, String password, Role role, Role... roles) {
+    public User(Integer id, String firstName, String sirname, String email, int age, String password, Role role, Role... roles) {
         super(id);
         this.firstName = firstName;
         this.sirname = sirname;
         this.email = email;
         this.age = age;
+        this.registred = LocalDateTime.now();
         this.password = password;
         EnumSet.of(role,roles);
     }
 
-    public User(int id, String firstName, String sirname, String email, int age, String password, LocalDateTime registred, Set<Role> role, List<Cost> costs, List<Group> groups) {
+    public User(int id, String firstName, String sirname, String email, int age, String password, LocalDateTime registred, Set<Role> role, List<Cost> costs, List<CostGroup> costGroups) {
         super(id);
         this.firstName = firstName;
         this.sirname = sirname;
@@ -87,7 +90,7 @@ public class User extends BaseEntity {
         this.registred = registred;
         this.role = role;
         this.costs = costs;
-        this.groups=groups;
+        this.costGroups = costGroups;
     }
 
     public User(int id, String firstName, String sirname, String email, int age, String password, LocalDateTime registred, Role role, Role...roles) {
@@ -166,11 +169,11 @@ public class User extends BaseEntity {
         this.costs = costs;
     }
 
-    public List<Group> getGroups() {
-        return groups;
+    public List<CostGroup> getCostGroups() {
+        return costGroups;
     }
 
-    public void setGroups(List<Group> groups) {
-        this.groups = groups;
+    public void setCostGroups(List<CostGroup> costGroups) {
+        this.costGroups = costGroups;
     }
 }

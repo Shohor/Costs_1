@@ -1,5 +1,5 @@
 DROP TABLE IF EXISTS cost;
-DROP TABLE IF EXISTS groups;
+DROP TABLE IF EXISTS costGroups;
 DROP TABLE IF EXISTS roles;
 DROP TABLE IF EXISTS user;
 
@@ -10,7 +10,7 @@ CREATE TABLE user
   sirname VARCHAR(45) NOT NULL,
   email VARCHAR(45) NOT NULL,
   age INT,
-  password VARCHAR(45) NOT NULL,
+  password VARCHAR(255) NOT NULL,
   registred DATE NOT NULL
 );
 CREATE UNIQUE INDEX user_unique_email_idx ON user(email);
@@ -23,7 +23,7 @@ CREATE TABLE roles
   FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE
 );
 
-CREATE TABLE groups
+CREATE TABLE costGroups
 (
   id INT PRIMARY KEY AUTO_INCREMENT,
   user_id INT NOT NULL,
@@ -40,7 +40,7 @@ CREATE TABLE cost
   description VARCHAR(255),
   user_id INT NOT NULL,
   group_id INT NOT NULL,
-  FOREIGN KEY (group_id) REFERENCES groups(id) ON DELETE CASCADE ,
+  FOREIGN KEY (group_id) REFERENCES costGroups(id) ON DELETE CASCADE ,
   FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE
 
 );

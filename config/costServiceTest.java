@@ -23,12 +23,14 @@ import static de.shokhor.costs.userTestData.USER_ID;
  * Created by user on 14.07.2017.
  */
 
+/*
 public class costServiceTest extends testService{
 
     @Autowired
     protected CostServiceImpl service;
 
-    @Test
+    */
+/*@Test
     public void testDelete()
     {
         service.delete(COST_ID, USER_ID+1);
@@ -48,8 +50,10 @@ public class costServiceTest extends testService{
         List<Cost> costsActual = service.getAll(USER_ID+1);
         MATCHER.assertCollectionEquals(COSTS, costsActual);
     }
+*//*
 
-    @Test
+    */
+/*@Test
     public void testSave()
     {
         Cost created = getCreated();
@@ -64,13 +68,17 @@ public class costServiceTest extends testService{
         Cost update = getUpdate();
         service.save(update,USER_ID+1,GROUP_ID);
         MATCHER.assertEquals(update, service.get(update.getId(),USER_ID+1));
-    }
+    }*//*
 
-    @Test
+
+    */
+/*@Test
     public void testGetAllByGroup()
     {
         List<Cost> costsActual = service.getAllByGroup(USER_ID+1, GROUP_ID);
         MATCHER.assertCollectionEquals(Arrays.asList(COST1,COST4,COST5),costsActual);
-    }
+    }*//*
+
 
 }
+*/

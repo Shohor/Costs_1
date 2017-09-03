@@ -1,6 +1,6 @@
 package de.shokhor.costs.service;
 
-import de.shokhor.costs.model.Group;
+import de.shokhor.costs.model.CostGroup;
 import de.shokhor.costs.testService;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,38 +22,38 @@ public class groupServiceTest extends testService {
     @Test
     public void testSave()
     {
-        Group groupActual = getCreated();
-        service.save(groupActual,USER_ID);
-        MATCHER.assertEquals(groupActual,service.get(groupActual.getId(),USER_ID));
+        CostGroup costGroupActual = getCreated();
+        service.save(costGroupActual,USER_ID);
+        MATCHER.assertEquals(costGroupActual,service.get(costGroupActual.getId(),USER_ID));
     }
 
     @Test
     public void testUpdate()
     {
-        Group groupActual = getUpdate();
-        service.save(groupActual,USER_ID);
-        MATCHER.assertEquals(groupActual,service.get(groupActual.getId(),USER_ID));
+        CostGroup costGroupActual = getUpdate();
+        service.save(costGroupActual,USER_ID);
+        MATCHER.assertEquals(costGroupActual,service.get(costGroupActual.getId(),USER_ID));
     }
 
     @Test
     public void testDelete()
     {
         service.delete(GROUP_ID,USER_ID);
-        MATCHER.assertCollectionEquals(Arrays.asList(GROUP2,GROUP4),service.getAll(USER_ID));
+        MATCHER.assertCollectionEquals(Arrays.asList(COST_GROUP_2, COST_GROUP_4),service.getAll(USER_ID));
     }
 
     @Test
     public void testGet()
     {
-        Group groupActual = service.get(GROUP_ID,USER_ID);
-        MATCHER.assertEquals(groupActual,GROUP1);
+        CostGroup costGroupActual = service.get(GROUP_ID,USER_ID);
+        MATCHER.assertEquals(costGroupActual, COST_GROUP_1);
     }
 
     @Test
     public void testGetAll()
     {
-        List<Group> groupsActual = service.getAll(USER_ID);
-        MATCHER.assertCollectionEquals(GROUPS,groupsActual);
+        List<CostGroup> groupsActual = service.getAll(USER_ID);
+        MATCHER.assertCollectionEquals(COST_GROUPS,groupsActual);
 
     }
 }

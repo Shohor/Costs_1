@@ -1,14 +1,17 @@
 package de.shokhor.costs.repository.Jpa;
 
 import de.shokhor.costs.model.Cost;
-import de.shokhor.costs.model.Group;
+import de.shokhor.costs.model.CostGroup;
 import de.shokhor.costs.model.User;
 import de.shokhor.costs.repository.CostRepository;
+import de.shokhor.costs.to.CostTo;
+import de.shokhor.costs.util.CostUtil;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -22,9 +25,24 @@ public class JpaCostRepositoryImpl implements CostRepository {
 
     @Override
     @Transactional
-    public Cost save(Cost cost, int userId, int groupId) {
+    public Cost save(CostTo costTo, int userId) {
 
-        cost.setGroup(em.getReference(Group.class,groupId));
+        Cost cost=CostUtil.createFromCostTo(costTo);
+        cost.setCostGroup(em.getReference(CostGroup.class,costTo.getGroupId()));
+        cost.setUser(em.getReference(User.class, userId));
+        if (cost.isNew())
+        {
+            em.persist(cost);
+            return cost;
+        }
+        else {
+            return em.merge(cost);
+        }
+    }
+
+    @Override
+    public Cost save(Cost cost, int userId, int groupId) {
+        cost.setCostGroup(em.getReference(CostGroup.class, groupId));
         cost.setUser(em.getReference(User.class, userId));
         if (cost.isNew())
         {
@@ -64,5 +82,38 @@ public class JpaCostRepositoryImpl implements CostRepository {
                 .setParameter("userId", userId)
                 .setParameter("groupId",groupId)
                 .getResultList();
+    }
+
+    @Override
+    public List<Cost> getFilteredList(int userId, Integer groupId, LocalDate startDate, LocalDate endDate) {
+        return em.createNamedQuery(Cost.FILTER,Cost.class)
+                .setParameter("userId", userId)
+                .setParameter("groupId", groupId)
+                .setParameter("startDate", startDate)
+                .setParameter("endDate", endDate)
+                .getResultList();
+    }
+
+    @Override
+    public List<Cost> getBetween(int userId, LocalDate startDate, LocalDate endDate) {
+        return em.createNamedQuery(Cost.GET_BETWEEN,Cost.class)
+                .setParameter("userId", userId)
+                .setParameter("startDate", startDate)
+                .setParameter("endDate", endDate)
+                .getResultList();
+    }
+
+    @Override
+    public LocalDate minDate(int userId) {
+        return em.createNamedQuery(Cost.MIN_DATE, LocalDate.class)
+                .setParameter("userId", userId)
+                .getSingleResult();
+    }
+
+    @Override
+    public LocalDate maxDate(int userId) {
+        return em.createNamedQuery(Cost.MAX_DATE, LocalDate.class)
+                .setParameter("userId", userId)
+                .getSingleResult();
     }
 }

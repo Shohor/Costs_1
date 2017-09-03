@@ -1,17 +1,16 @@
 package de.shokhor.costs.model;
 
 import org.hibernate.Hibernate;
+import org.springframework.data.domain.Persistable;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.*;
 
 /**
  * Created by user on 08.07.2017.
  */
 @MappedSuperclass
-public class BaseEntity {
+@Access(AccessType.FIELD)
+public class BaseEntity implements Persistable<Integer> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Integer id;

@@ -12,7 +12,7 @@
                 <div class="shadow">
                     <h3><fmt:message key="users.title"/></h3>
                     <div class="view-box">
-                        <a class="btn btn-sm btn-info" onclick="add()"><fmt:message key="users.add"/></a>
+                        <a class="btn btn-sm btn-info" onclick="add('<fmt:message key="users.add"/>')"><fmt:message key="users.add"/></a>
                         <table class="table table-striped display" id="datatable">
                             <thead>
                                 <tr>
@@ -27,7 +27,7 @@
                                     <th></th>
                                 </tr>
                             </thead>
-                            <c:forEach items="${userList}" var="user">
+                           <%-- <c:forEach items="${userList}" var="user">
                                 <jsp:useBean id="user" scope="page" type="de.shokhor.costs.model.User"/>
                                 <tr>
                                     <td>${user.firstName}</td>
@@ -35,13 +35,13 @@
                                     <td>${user.age}</td>
                                     <td><a href="mailto:${user.email}">${user.email}</a></td>
                                     <td>${fn:formatDateTime(user.registred)}</td>
-                                    <%--<td><fmt:formatDate value="${user.registred}" pattern="dd-MMMM-yyyy"/></td>--%>
+                                    &lt;%&ndash;<td><fmt:formatDate value="${user.registred}" pattern="dd-MMMM-yyyy"/></td>&ndash;%&gt;
                                     <td>${user.role}</td>
-                                    <td><a class="btn btn-xs btn-default costs" href="<c:url value='costs'/>"><fmt:message key="users.costs"/></a></td>
-                                    <td><a class="btn btn-xs btn-primary edit"><fmt:message key="common.update"/></a></td>
-                                    <td><a class="btn btn-xs btn-danger delete" onclick="deleteRow(${user.id})"><fmt:message key="common.delete"/></a></td>
+                                    <td><a class="btn btn-xs btn-default" href="<c:url value='costs'/>"><fmt:message key="users.costs"/></a></td>
+                                    <td><a class="btn btn-xs btn-primary"><fmt:message key="common.update"/></a></td>
+                                    <td><a class="btn btn-xs btn-danger" onclick="deleteRow(${user.id})"><fmt:message key="common.delete"/></a></td>
                                 </tr>
-                            </c:forEach>
+                            </c:forEach>--%>
                         </table>
                     </div>
                 </div>
@@ -59,7 +59,7 @@
                         <form class="form-horizontal" method="post" id="detailsForm">
                             <input type="text" hidden="hidden" id="id" name="id">
 
-                            <div class="form-group">
+                            <div class="form-costGroup">
                                 <label for="firstName" class="control-label col-xs-3"><fmt:message key="users.name"/></label>
 
                                 <div class="col-xs-9">
@@ -67,7 +67,7 @@
                                 </div>
                             </div>
 
-                            <div class="form-group">
+                            <div class="form-costGroup">
                                 <label for="sirname" class="control-label col-xs-3"><fmt:message key="users.sirname"/></label>
 
                                 <div class="col-xs-9">
@@ -75,7 +75,7 @@
                                 </div>
                             </div>
 
-                            <div class="form-group">
+                            <div class="form-costGroup">
                                 <label for="age" class="control-label col-xs-3"><fmt:message key="users.age"/></label>
 
                                 <div class="col-xs-9">
@@ -83,7 +83,7 @@
                                 </div>
                             </div>
 
-                            <div class="form-group">
+                            <div class="form-costGroup">
                                 <label for="email" class="control-label col-xs-3"><fmt:message key="users.email"/></label>
 
                                 <div class="col-xs-9">
@@ -91,7 +91,7 @@
                                 </div>
                             </div>
 
-                            <div class="form-group">
+                            <div class="form-costGroup">
                                 <label for="password" class="control-label col-xs-3"><fmt:message key="users.password"/></label>
 
                                 <div class="col-xs-9">
@@ -99,7 +99,7 @@
                                 </div>
                             </div>
 
-                            <div class="form-group">
+                            <div class="form-costGroup">
                                 <div class="col-xs-offset-3 col-xs-9">
                                     <button type="button" class="btn btn-primary" onclick="save()"><fmt:message key="common.save"/></button>
                                 </div>
@@ -110,65 +110,17 @@
             </div>
         </div>
     </body>
+    <script type="text/javascript">
+        var i18n = [];
+        <c:forEach var='key' items='<%=new String[]{"users.costs","common.update","common.delete","common.deleted","common.saved","common.failed"}%>'>
+            i18n['${key}'] = '<fmt:message key="${key}"/>';
+        </c:forEach>
+        var edit_title ='<fmt:message key="users.edit"/>';
+    </script>
     <script type="text/javascript" src="webjars/jquery/2.2.4/jquery.min.js"></script>
     <script type="text/javascript" src="webjars/bootstrap/3.3.7-1/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="webjars/datatables/1.10.12/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="webjars/noty/2.3.8/js/noty/packaged/jquery.noty.packaged.min.js"></script>
     <script type="text/javascript" src="resources/js/datatablesUtil.js"></script>
-    <script type="text/javascript">
-
-        var ajaxUrl = 'ajax/admin/users/';
-        var datatableApi;
-
-        function updateTable() {
-            $.get(ajaxUrl, updateTableByData);
-        }
-
-        // $(document).ready(function () {
-        $(function () {
-            datatableApi = $('#datatable').DataTable({
-                "paging": false,
-                "info": true,
-                "columns": [
-                    {
-                        "data": "firstName"
-                    },
-                    {
-                        "data": "sirname"
-                    },
-                    {
-                        "data": "age"
-                    },
-                    {
-                        "data": "email"
-                    },
-                    {
-                        "data": "registred"
-                    },
-                    {
-                        "data": "role"
-                    },
-                    {
-                        "defaultContent": "<fmt:message key="users.costs"/>",
-                        "orderable": false
-                    },
-                    {
-                        "defaultContent": "<fmt:message key="common.update"/>",
-                        "orderable": false
-                    },
-                    {
-                        "defaultContent": "<fmt:message key="common.delete"/>",
-                        "orderable": false
-                    }
-                ],
-                "order": [
-                    [
-                        0,
-                        "asc"
-                    ]
-                ]
-            });
-            makeEditable();
-        });
-    </script>
+    <script type="text/javascript" src="resources/js/datatablesUser.js"></script>
 </html>

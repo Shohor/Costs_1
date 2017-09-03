@@ -29,6 +29,7 @@ public class userTestData {
 
     public static final int USER_ID = 1;
 
+    public static final User USER_TEST = new User(USER_ID+2, "User_firstname", "User_sirname", "aaaa@sss.dd", 25, "1234567", Role.ROLE_USER);
     public static final User ADMIN = new User(USER_ID +0, "Ilya", "Shokhor", "shohor@mail.ru", 34, "Shish1983", of(2017, Month.JANUARY, 1, 10, 0), Role.ROLE_USER,Role.ROLE_ADMIN);
     public static final User USER = new User(USER_ID +1, "Natalia", "Kozlovskaya", "natashik84@list.ru", 33, "Russia1984", of(2017, Month.JANUARY, 1, 10, 0),Role.ROLE_USER);
 
@@ -36,7 +37,7 @@ public class userTestData {
 
     public static final User getCreated()
     {
-        return new User(USER_ID+2, "Ivan", "Ivanov", "Ivanov@mail.com", 25, "Ivanov1234", of(2017, Month.JANUARY, 1, 10, 0),Role.ROLE_USER);
+        return new User(USER_ID+2, "User_firstname", "User_sirname", "aaaa@sss.dd", 25, "1234567", Role.ROLE_USER);
     }
 
     public static final User getUpdate()

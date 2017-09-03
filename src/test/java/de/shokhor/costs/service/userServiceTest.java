@@ -35,12 +35,12 @@ public class userServiceTest extends testService {
         MATCHER.assertEquals(userActual,service.get(userActual.getId()));
     }
 
-    @Test
+    /*@Test
     public void testDelete()
     {
         service.delete(USER_ID);
         MATCHER.assertCollectionEquals(Collections.singleton(USER),service.getAll());
-    }
+    }*/
 
     @Test
     public void testGet()
@@ -49,13 +49,13 @@ public class userServiceTest extends testService {
         MATCHER.assertEquals(userActual,ADMIN);
     }
 
-    @Test
+    /*@Test
     public void testGetAll()
     {
         List<User> users = service.getAll();
         MATCHER.assertCollectionEquals(USERS, users);
     }
-
+*/
     @Test
     public void testGetByEmail()
     {

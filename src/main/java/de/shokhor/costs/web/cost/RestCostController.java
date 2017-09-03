@@ -32,9 +32,9 @@ public class RestCostController extends AbstractCostController
     }
 
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Cost update(@RequestBody Cost cost, @PathVariable("id") int id, @RequestParam (value = "groupId") int groupId)
+    public Cost update(@RequestBody Cost cost, @RequestParam (value = "groupId") int groupId)
     {
-        return super.update(cost,id,groupId);
+        return super.update(cost,groupId);
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)

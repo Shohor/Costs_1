@@ -1,7 +1,7 @@
 package de.shokhor.costs;
 
 import de.shokhor.costs.matcher.ModelMatcher;
-import de.shokhor.costs.model.Group;
+import de.shokhor.costs.model.CostGroup;
 
 import java.util.Arrays;
 import java.util.List;
@@ -11,25 +11,25 @@ import java.util.List;
  */
 public class groupTestData {
 
-    public static final ModelMatcher<Group> MATCHER = ModelMatcher.of(Group.class);
+    public static final ModelMatcher<CostGroup> MATCHER = ModelMatcher.of(CostGroup.class);
 
     public static final int GROUP_ID = 1;
 
-    public static final Group GROUP1 = new Group(GROUP_ID +0, "Food");
-    public static final Group GROUP2 = new Group(GROUP_ID +1, "Children");
-    public static final Group GROUP3 = new Group(GROUP_ID +2, "House");
-    public static final Group GROUP4 = new Group(GROUP_ID +3, "Presents");
-    public static final Group GROUP5 = new Group(GROUP_ID +4, "Food");
+    public static final CostGroup COST_GROUP_1 = new CostGroup(GROUP_ID +0, "Food");
+    public static final CostGroup COST_GROUP_2 = new CostGroup(GROUP_ID +1, "Children");
+    public static final CostGroup COST_GROUP_3 = new CostGroup(GROUP_ID +2, "House");
+    public static final CostGroup COST_GROUP_4 = new CostGroup(GROUP_ID +3, "Presents");
+    public static final CostGroup COST_GROUP_5 = new CostGroup(GROUP_ID +4, "Food");
 
-    public static final List<Group> GROUPS = Arrays.asList(GROUP1,GROUP2,GROUP4);
+    public static final List<CostGroup> COST_GROUPS = Arrays.asList(COST_GROUP_1, COST_GROUP_2, COST_GROUP_4);
 
-    public static final Group getCreated()
+    public static final CostGroup getCreated()
     {
-        return new Group(GROUP_ID+5,"New group");
+        return new CostGroup(GROUP_ID+5,"New group");
     }
 
-    public static final Group getUpdate()
+    public static final CostGroup getUpdate()
     {
-        return new Group(GROUP_ID+0, "UpdateFood");
+        return new CostGroup(GROUP_ID+0, "UpdateFood");
     }
 }

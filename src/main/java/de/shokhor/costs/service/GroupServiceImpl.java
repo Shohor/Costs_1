@@ -1,6 +1,6 @@
 package de.shokhor.costs.service;
 
-import de.shokhor.costs.model.Group;
+import de.shokhor.costs.model.CostGroup;
 import de.shokhor.costs.repository.GroupRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,13 +17,13 @@ public class GroupServiceImpl implements GroupService {
     public GroupRepository repository;
 
     @Override
-    public Group save(Group group, int userId) {
-        return repository.save(group, userId);
+    public CostGroup save(CostGroup costGroup, int userId) {
+        return repository.save(costGroup, userId);
     }
 
     @Override
-    public Group update(Group group, int userId) {
-        return repository.save(group, userId);
+    public CostGroup update(CostGroup costGroup, int userId) {
+        return repository.save(costGroup, userId);
     }
 
     @Override
@@ -32,12 +32,12 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
-    public Group get(int groupId, int userId) {
+    public CostGroup get(int groupId, int userId) {
         return repository.get(groupId, userId);
     }
 
     @Override
-    public List<Group> getAll(int userId) {
+    public List<CostGroup> getAll(int userId) {
         return repository.getAll(userId);
     }
 }

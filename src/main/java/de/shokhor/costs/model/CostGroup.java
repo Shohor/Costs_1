@@ -10,13 +10,13 @@ import java.util.List;
  * Created by user on 08.07.2017.
  */
 @NamedQueries({
-        @NamedQuery(name = Group.DELETE, query = "DELETE FROM Group g WHERE g.id=:id AND g.user.id=:userId"),
-        @NamedQuery(name = Group.ALL, query = "SELECT g FROM Group g WHERE g.user.id=:userId")
+        @NamedQuery(name = CostGroup.DELETE, query = "DELETE FROM CostGroup g WHERE g.id=:id AND g.user.id=:userId"),
+        @NamedQuery(name = CostGroup.ALL, query = "SELECT g FROM CostGroup g WHERE g.user.id=:userId")
 })
 
 @Entity
 @Table(name = "groups")
-public class Group extends BaseEntity {
+public class CostGroup extends BaseEntity {
 
     public static final String DELETE = "group.delete";
     public static final String ALL = "group.getAll";
@@ -26,16 +26,18 @@ public class Group extends BaseEntity {
     private String group;
 
     @OneToMany (mappedBy = "group")
+    @JsonIgnore
     private List<Cost> costs;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
+    @JsonIgnore
     private User user;
 
-    public Group() {
+    public CostGroup() {
     }
 
-    public Group(Integer id, String group) {
+    public CostGroup(Integer id, String group) {
         super(id);
         this.group = group;
     }
