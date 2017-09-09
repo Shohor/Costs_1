@@ -1,4 +1,4 @@
-package de.shokhor.costs.model;
+package de.shokhor.costs.model.User;
 
 import org.springframework.security.core.GrantedAuthority;
 

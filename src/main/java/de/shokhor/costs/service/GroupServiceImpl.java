@@ -1,9 +1,11 @@
 package de.shokhor.costs.service;
 
-import de.shokhor.costs.model.CostGroup;
+import de.shokhor.costs.model.Cost.TypeCost;
 import de.shokhor.costs.repository.GroupRepository;
+import de.shokhor.costs.util.exception.ExceptionUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import java.util.List;
 
@@ -17,27 +19,32 @@ public class GroupServiceImpl implements GroupService {
     public GroupRepository repository;
 
     @Override
-    public CostGroup save(CostGroup costGroup, int userId) {
-        return repository.save(costGroup, userId);
+    public TypeCost save(TypeCost typeCost, int userId)
+    {
+        Assert.notNull(typeCost,"Group must be not null");
+        return repository.save(typeCost, userId);
     }
 
     @Override
-    public CostGroup update(CostGroup costGroup, int userId) {
-        return repository.save(costGroup, userId);
+    public TypeCost update(TypeCost typeCost, int userId)
+    {
+        Assert.notNull(typeCost,"Group must be not null");
+        return ExceptionUtil.checkNotFoundWithId(repository.save(typeCost, userId), typeCost.getId());
     }
 
     @Override
-    public boolean delete(int groupId, int userId) {
-        return repository.delete(groupId, userId);
+    public void delete(int groupId, int userId) {
+        ExceptionUtil.checkNotFoundWithId(repository.delete(groupId, userId), groupId);
     }
 
     @Override
-    public CostGroup get(int groupId, int userId) {
-        return repository.get(groupId, userId);
+    public TypeCost get(int groupId, int userId)
+    {
+        return ExceptionUtil.checkNotFoundWithId(repository.get(groupId, userId), groupId);
     }
 
     @Override
-    public List<CostGroup> getAll(int userId) {
+    public List<TypeCost> getAll(int userId) {
         return repository.getAll(userId);
     }
 }

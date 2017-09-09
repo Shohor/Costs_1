@@ -1,7 +1,7 @@
 package de.shokhor.costs.web.cost;
 
 
-import de.shokhor.costs.model.Cost;
+import de.shokhor.costs.model.Cost.Cost;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,7 +31,7 @@ public class RestCostController extends AbstractCostController
         return super.getAll();
     }
 
-    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    /*@PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public Cost update(@RequestBody Cost cost, @RequestParam (value = "groupId") int groupId)
     {
         return super.update(cost,groupId);
@@ -47,7 +47,7 @@ public class RestCostController extends AbstractCostController
     public List<Cost> getAllByGroup (@RequestParam (value = "groupId") int groupId)
     {
         return super.getAllByGroup(groupId);
-    }
+    }*/
 
 
 

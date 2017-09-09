@@ -1,6 +1,8 @@
-package de.shokhor.costs.model;
+package de.shokhor.costs.model.Cost;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import de.shokhor.costs.model.BaseEntity;
+import de.shokhor.costs.model.User.User;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -10,22 +12,22 @@ import java.util.List;
  * Created by user on 08.07.2017.
  */
 @NamedQueries({
-        @NamedQuery(name = CostGroup.DELETE, query = "DELETE FROM CostGroup g WHERE g.id=:id AND g.user.id=:userId"),
-        @NamedQuery(name = CostGroup.ALL, query = "SELECT g FROM CostGroup g WHERE g.user.id=:userId")
+        @NamedQuery(name = TypeCost.DELETE, query = "DELETE FROM TypeCost g WHERE g.id=:id AND g.user.id=:userId"),
+        @NamedQuery(name = TypeCost.ALL, query = "SELECT g FROM TypeCost g WHERE g.user.id=:userId")
 })
 
 @Entity
-@Table(name = "groups")
-public class CostGroup extends BaseEntity {
+@Table(name = "type_cost")
+public class TypeCost extends BaseEntity {
 
     public static final String DELETE = "group.delete";
     public static final String ALL = "group.getAll";
 
-    @Column(name = "group_cost")
+    @Column(name = "type")
     @NotNull
-    private String group;
+    private String type;
 
-    @OneToMany (mappedBy = "group")
+    @OneToMany (mappedBy = "typeCost")
     @JsonIgnore
     private List<Cost> costs;
 
@@ -34,20 +36,20 @@ public class CostGroup extends BaseEntity {
     @JsonIgnore
     private User user;
 
-    public CostGroup() {
+    public TypeCost() {
     }
 
-    public CostGroup(Integer id, String group) {
+    public TypeCost(Integer id, String type) {
         super(id);
-        this.group = group;
+        this.type = type;
     }
 
-    public String getGroup() {
-        return group;
+    public String getType() {
+        return type;
     }
 
-    public void setGroup(String group) {
-        this.group = group;
+    public void setType(String group) {
+        this.type = group;
     }
 
     public List<Cost> getCosts() {

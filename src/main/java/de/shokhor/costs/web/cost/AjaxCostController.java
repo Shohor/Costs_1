@@ -1,6 +1,6 @@
 package de.shokhor.costs.web.cost;
 
-import de.shokhor.costs.model.Cost;
+import de.shokhor.costs.model.Cost.Cost;
 import de.shokhor.costs.to.CostTo;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
@@ -69,12 +69,5 @@ public class AjaxCostController extends AbstractCostController {
         }
 
         return super.filter(groupId, startDate, endDate);
-    }
-
-    @PostMapping(value = "/bygroup", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Cost> getAllByGroup(@RequestParam("groupId") String groupId)
-    {
-        int grId= Integer.parseInt(groupId);
-        return super.getAllByGroup(grId);
     }
 }

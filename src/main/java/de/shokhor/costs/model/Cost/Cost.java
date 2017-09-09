@@ -1,6 +1,9 @@
-package de.shokhor.costs.model;
+package de.shokhor.costs.model.Cost;
 
 
+import de.shokhor.costs.model.BaseEntity;
+import de.shokhor.costs.model.CashAccountsAndCards;
+import de.shokhor.costs.model.User.User;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -17,8 +20,8 @@ import java.time.LocalDate;
 @NamedQueries({
     @NamedQuery(name = Cost.DELETE, query = "DELETE FROM Cost c WHERE c.id=:id AND c.user.id=:userId"),
     @NamedQuery(name = Cost.ALL_SORTED, query = "SELECT c FROM Cost c WHERE c.user.id=:userId ORDER BY c.date"),
-    @NamedQuery(name = Cost.BY_GROUP, query = "SELECT c FROM Cost c WHERE c.user.id=:userId AND c.costGroup.id=:groupId"),
-    @NamedQuery(name = Cost.FILTER, query = "SELECT c FROM  Cost c WHERE c.user.id=:userId AND c.costGroup.id =:groupId " +
+    @NamedQuery(name = Cost.BY_GROUP, query = "SELECT c FROM Cost c WHERE c.user.id=:userId AND c.typeCost.id=:groupId"),
+    @NamedQuery(name = Cost.FILTER, query = "SELECT c FROM  Cost c WHERE c.user.id=:userId AND c.typeCost.id =:groupId " +
             "AND c.date BETWEEN :startDate AND :endDate"),
     @NamedQuery(name = Cost.MIN_DATE, query = "SELECT min(c.date) FROM Cost c WHERE c.user.id=:userId"),
     @NamedQuery(name = Cost.MAX_DATE, query = "SELECT max (c.date) FROM Cost c WHERE c.user.id=:userId"),
@@ -37,9 +40,9 @@ public class Cost extends BaseEntity {
     public static final String GET_BETWEEN="Cost.get_between";
 
 
-    @Column(name = "price")
+    @Column(name = "amount")
     @NotNull
-    private double price;
+    private double amount;
 
     @Column(name = "date")
     @NotNull
@@ -55,57 +58,44 @@ public class Cost extends BaseEntity {
 
     @ManyToOne (fetch = FetchType.EAGER)
     @JoinColumn(name = "group_id")
-    private CostGroup costGroup;
+    private TypeCost typeCost;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "cash_accounts_and_cards_id")
+    private CashAccountsAndCards cashAccountsAndCards;
 
     public Cost() {
     }
 
-    public Cost(Integer id, double price, LocalDate date, String description, User user, CostGroup costGroup) {
+    public Cost(Integer id, double amount, LocalDate date, String description, User user, TypeCost typeCost, CashAccountsAndCards cashAccountsAndCards) {
         super(id);
-        this.price = price;
+        this.amount = amount;
         this.date = date;
+        this.description = description;
         this.user = user;
-        this.costGroup = costGroup;
-        this.description = description;
+        this.typeCost = typeCost;
+        this.cashAccountsAndCards = cashAccountsAndCards;
     }
 
-    public Cost(Integer id, double price, LocalDate date, String description) {
+    public Cost(Integer id, double amount, LocalDate date, String description) {
         super(id);
-        this.price = price;
+        this.amount = amount;
         this.date = date;
         this.description = description;
     }
 
-    public Cost(Integer id, double price, LocalDate date) {
+    public Cost(Integer id, double amount, LocalDate date) {
         super(id);
-        this.price = price;
+        this.amount = amount;
         this.date = date;
     }
 
-    public Cost(LocalDate localDateTime) {
-        this.id=null;
-        this.date=localDateTime;
+    public double getAmount() {
+        return amount;
     }
 
-    public Cost(Integer id, LocalDate date, int price, String description) {
-        super(id);
-        this.date=date;
-        this.price=price;
-        this.description=description;
-    }
-
-    public Cost(Integer id, double price, String description) {
-        this.id=id;
-        this.price=price;
-        this.description=description;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
+    public void setAmount(double price) {
+        this.amount = price;
     }
 
     public LocalDate getDate() {
@@ -124,12 +114,12 @@ public class Cost extends BaseEntity {
         this.user = user;
     }
 
-    public CostGroup getCostGroup() {
-        return costGroup;
+    public TypeCost getTypeCost() {
+        return typeCost;
     }
 
-    public void setCostGroup(CostGroup costGroup) {
-        this.costGroup = costGroup;
+    public void setTypeCost(TypeCost typeCost) {
+        this.typeCost = typeCost;
     }
 
     public String getDescription() {
@@ -138,5 +128,13 @@ public class Cost extends BaseEntity {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public CashAccountsAndCards getCashAccountsAndCards() {
+        return cashAccountsAndCards;
+    }
+
+    public void setCashAccountsAndCards(CashAccountsAndCards cashAccountsAndCards) {
+        this.cashAccountsAndCards = cashAccountsAndCards;
     }
 }

@@ -1,7 +1,7 @@
 package de.shokhor.costs;
 
 import de.shokhor.costs.matcher.ModelMatcher;
-import de.shokhor.costs.model.Cost;
+import de.shokhor.costs.model.Cost.Cost;
 
 import java.time.Month;
 import java.util.Arrays;

@@ -1,7 +1,7 @@
 package de.shokhor.costs.web.cost;
 
 import de.shokhor.costs.AuthorizedUser;
-import de.shokhor.costs.model.Cost;
+import de.shokhor.costs.model.Cost.Cost;
 import de.shokhor.costs.service.CostService;
 import de.shokhor.costs.service.GroupService;
 import de.shokhor.costs.to.CostTo;
@@ -51,12 +51,12 @@ public abstract class AbstractCostController {
         return costService.save(costTo,userId);
     }
 
-    public List<Cost> getAllByGroup(int groupId)
+    /*public List<Cost> getAllByGroup(int groupId)
     {
         int userId = AuthorizedUser.id();
         LOG.info("Get all costs by group{} for User{}",groupId,userId);
         return costService.getAllByGroup(userId,groupId);
-    }
+    }*/
 
     public List<Cost> getAll()
     {
@@ -65,7 +65,7 @@ public abstract class AbstractCostController {
         return costService.getAll(userId);
     }
 
-    public Cost update(Cost cost, int groupId)
+    /*public Cost update(Cost cost, int groupId)
     {
         int userId = AuthorizedUser.id();
         LOG.info("Update cost{} for User {}", cost.getId(), userId);
@@ -78,12 +78,12 @@ public abstract class AbstractCostController {
         int userId = AuthorizedUser.id();
         LOG.info("Create cost for User{}", userId);
         return costService.save(cost,userId, groupId);
-    }
+    }*/
 
     public List<Cost> filter (Integer groupId, LocalDate startDate, LocalDate endDate)
     {
         int userId=AuthorizedUser.id();
-        LOG.info("Filtered cost for User{}, CostGroup{}, startDate{}, endDate{}", userId,groupId,startDate,endDate);
+        LOG.info("Filtered cost for User{}, TypeCost{}, startDate{}, endDate{}", userId,groupId,startDate,endDate);
         return  costService.getFilteredList(userId, groupId, startDate, endDate);
     }
 

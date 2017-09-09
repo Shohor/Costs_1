@@ -1,7 +1,7 @@
 package de.shokhor.costs;
 
 
-import de.shokhor.costs.model.User;
+import de.shokhor.costs.model.User.User;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 

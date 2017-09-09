@@ -4,7 +4,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 public class CostTo {
 
@@ -12,7 +11,7 @@ public class CostTo {
     private Integer id;
 
     @NotNull
-    private int groupId;
+    private int typeId;
 
     @NotNull
     private double price;
@@ -21,17 +20,21 @@ public class CostTo {
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate date;
 
+    @NotNull
+    private int cashAccountsAndCardsId;
+
     private String description;
 
     public CostTo() {
     }
 
-    public CostTo(Integer id, int groupId, LocalDate date, double price, String description) {
+    public CostTo(Integer id, int typeId, LocalDate date, double price, int cashAccountsAndCardsId, String description) {
         this.id = id;
-        this.groupId = groupId;
+        this.typeId = typeId;
         this.price = price;
         this.description = description;
         this.date = date;
+        this.cashAccountsAndCardsId = cashAccountsAndCardsId;
     }
 
     public Integer getId() {
@@ -42,12 +45,12 @@ public class CostTo {
         this.id = id;
     }
 
-    public int getGroupId() {
-        return groupId;
+    public int getTypeId() {
+        return typeId;
     }
 
-    public void setGroupId(int groupId) {
-        this.groupId = groupId;
+    public void setTypeId(int typeId) {
+        this.typeId = typeId;
     }
 
     public double getPrice() {
@@ -79,5 +82,11 @@ public class CostTo {
         return (getId()== null);
     }
 
+    public int getCashAccountsAndCardsId() {
+        return cashAccountsAndCardsId;
+    }
 
+    public void setCashAccountsAndCardsId(int cashAccountsAndCardsId) {
+        this.cashAccountsAndCardsId = cashAccountsAndCardsId;
+    }
 }

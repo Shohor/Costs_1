@@ -15,7 +15,7 @@
             <h3><fmt:message key="costs.title"/></h3>
             <div class="view-box">
                 <form:form method="post" class="form-horizontal" role="form" id="filter">
-                    <div class="form-costGroup">
+                    <div class="form-group">
                         <label class="control-label col-sm-2" for="startDate"><fmt:message key="costs.startDate"/>:</label>
 
                         <div class="col-sm-2">
@@ -28,20 +28,20 @@
                             <input type="date" class="form-control" name="endDate" id="endDate">
                         </div>
                     </div>
-                    <div class="form-costGroup">
-                        <label class="control-label col-sm-2" for="group_filter"><fmt:message key="costs.costGroup"/>:</label>
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="group_filter"><fmt:message key="costs.typeCost"/>:</label>
 
                         <div class="col-sm-2">
-                            <select class="btn btn-default" name="groupId" id="group_filter">
+                            <select class="btn btn-default" name="type" id="group_filter">
                                 <option></option>
-                                <c:forEach items="${costGroupList}" var="costGroup">
-                                    <jsp:useBean id="costGroup" scope="page" type="de.shokhor.costs.model.CostGroup"/>
-                                    <option name="groupId" value="${costGroup.id}">${costGroup.costGroup}</option>
+                                <c:forEach items="${groupList}" var="typeCost">
+                                    <jsp:useBean id="typeCost" scope="page" type="de.shokhor.costs.model.Cost.TypeCost"/>
+                                    <option name="type" value="${typeCost.id}">${typeCost.type}</option>
                                 </c:forEach>
                             </select>
                         </div>
                     </div>
-                    <div class="form-costGroup">
+                    <div class="form-group">
                         <div class="col-sm-6"></div>
                         <div class="col-sm-1">
                             <button class="btn btn-primary"  type="button" onclick="updateTable()"><fmt:message key="costs.filter"/></button>
@@ -49,22 +49,30 @@
                     </div>
                 </form:form>
                 <a class="btn btn-sm btn-info" onclick="add()"><fmt:message key="costs.add"/></a>
+                <p/>
+                <ul class="nav nav-tabs">
+                    <li role="presentation" class="active"><a href="#">Home</a></li>
+                    <li role="presentation"><a href="#">Profile</a></li>
+                    <li role="presentation"><a href="#">Messages</a></li
+                </ul>
+                <hr/>
                 <table class="table table-striped display" id="datatable">
                     <thead>
                     <tr>
-                        <th><fmt:message key="costs.costGroup"/></th>
-                        <th><fmt:message key="costs.price"/></th>
+                        <th><fmt:message key="costs.typeCost"/></th>
+                        <th><fmt:message key="costs.amount"/></th>
                         <th><fmt:message key="costs.dateTime"/></th>
+                        <th>Cards</th>
                         <th><fmt:message key="costs.description"/></th>
                         <th></th>
                         <th></th>
                     </tr>
                     </thead>
                     <%--<c:forEach items="${costList}" var="cost">
-                        <jsp:useBean id="cost" scope="page" type="de.shokhor.costs.model.Cost"/>
+                        <jsp:useBean id="cost" scope="page" type="de.shokhor.costs.model.Cost.Cost"/>
                         <tr>
-                            <td>${cost.costGroup.costGroup}</td>
-                            <td>${cost.price}</td>
+                            <td>${cost.typeCost.typeCost}</td>
+                            <td>${cost.amount}</td>
                             <td>${fn:formatDateTime(cost.date)}</td>
                             <td>${cost.description}</td>
                             <td><a class="btn btn-xs btn-primary edit"><fmt:message key="common.update"/></a></td>
@@ -88,28 +96,28 @@
                 <form class="form-horizontal" method="post" id="detailsForm">
                     <input type="text" hidden="hidden" id="id" name="id">
 
-                    <div class="form-costGroup">
-                        <label for="costGroup" class="control-label col-xs-3"><fmt:message key="costs.costGroup"/></label>
+                    <div class="form-group">
+                        <label for="typeCost" class="control-label col-xs-3"><fmt:message key="costs.typeCost"/></label>
 
                         <div class="col-xs-9">
-                            <select class="btn btn-default" name="groupId" id="costGroup">
-                                <c:forEach items="${costGroupList}" var="costGroup">
-                                    <%--<jsp:useBean id="costGroup" scope="page" type="de.shokhor.costs.model.CostGrouproup"/>--%>
-                                    <option name="groupId" value="${costGroup.id}">${costGroup.costGroup}</option>
+                            <select class="btn btn-default" name="type" id="typeCost">
+                                <c:forEach items="${typeCostList}" var="typeCost">
+                                    <%--<jsp:useBean id="typeCost" scope="page" type="de.shokhor.costs.model.CostGrouproup"/>--%>
+                                    <option name="type" value="${typeCost.id}">${typeCost.typeCost}</option>
                                 </c:forEach>
                             </select>
                         </div>
                     </div>
 
-                    <div class="form-costGroup">
-                        <label for="price" class="control-label col-xs-3"><fmt:message key="costs.price"/></label>
+                    <div class="form-group">
+                        <label for="amount" class="control-label col-xs-3"><fmt:message key="costs.amount"/></label>
 
                         <div class="col-xs-9">
-                            <input type="number" class="form-control" id="price" name="price" placeholder="<fmt:message key="costs.price"/>">
+                            <input type="number" class="form-control" id="amount" name="amount" placeholder="<fmt:message key="costs.amount"/>">
                         </div>
                     </div>
 
-                    <div class="form-costGroup">
+                    <div class="form-group">
                         <label for="date" class="control-label col-xs-3"><fmt:message key="costs.dateTime"/></label>
 
                         <div class="col-xs-9">
@@ -117,7 +125,7 @@
                         </div>
                     </div>
 
-                    <div class="form-costGroup">
+                    <div class="form-group">
                         <label for="description" class="control-label col-xs-3"><fmt:message key="costs.description"/></label>
 
                         <div class="col-xs-9">
@@ -125,7 +133,7 @@
                         </div>
                     </div>
 
-                    <div class="form-costGroup">
+                    <div class="form-group">
                         <div class="col-xs-offset-3 col-xs-9">
                             <button type="button" class="btn btn-primary" onclick="save()"><fmt:message key="common.save"/></button>
                         </div>

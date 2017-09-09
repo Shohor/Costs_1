@@ -1,8 +1,9 @@
 package de.shokhor.costs.repository.Jpa;
 
-import de.shokhor.costs.model.Cost;
-import de.shokhor.costs.model.CostGroup;
-import de.shokhor.costs.model.User;
+import de.shokhor.costs.model.CashAccountsAndCards;
+import de.shokhor.costs.model.Cost.Cost;
+import de.shokhor.costs.model.Cost.TypeCost;
+import de.shokhor.costs.model.User.User;
 import de.shokhor.costs.repository.CostRepository;
 import de.shokhor.costs.to.CostTo;
 import de.shokhor.costs.util.CostUtil;
@@ -18,6 +19,7 @@ import java.util.List;
  * Created by user on 10.07.2017.
  */
 @Repository
+@Transactional(readOnly = true)
 public class JpaCostRepositoryImpl implements CostRepository {
 
     @PersistenceContext
@@ -28,7 +30,7 @@ public class JpaCostRepositoryImpl implements CostRepository {
     public Cost save(CostTo costTo, int userId) {
 
         Cost cost=CostUtil.createFromCostTo(costTo);
-        cost.setCostGroup(em.getReference(CostGroup.class,costTo.getGroupId()));
+        cost.setTypeCost(em.getReference(TypeCost.class,costTo.getTypeId()));
         cost.setUser(em.getReference(User.class, userId));
         if (cost.isNew())
         {
@@ -41,9 +43,26 @@ public class JpaCostRepositoryImpl implements CostRepository {
     }
 
     @Override
-    public Cost save(Cost cost, int userId, int groupId) {
-        cost.setCostGroup(em.getReference(CostGroup.class, groupId));
+    @Transactional
+    public Cost save(Cost cost, int userId, int groupId, int cashAccountsAndCardsId) {
+        cost.setTypeCost(em.getReference(TypeCost.class, groupId));
         cost.setUser(em.getReference(User.class, userId));
+        cost.setCashAccountsAndCards(em.getReference(CashAccountsAndCards.class, cashAccountsAndCardsId));
+        if (cost.isNew())
+        {
+            em.persist(cost);
+            return cost;
+        }
+        else {
+            return em.merge(cost);
+        }
+    }
+
+    @Override
+    public Cost save(Cost cost, int userId, int groupId) {
+        cost.setTypeCost(em.getReference(TypeCost.class, groupId));
+        cost.setUser(em.getReference(User.class, userId));
+        cost.setCashAccountsAndCards(null);
         if (cost.isNew())
         {
             em.persist(cost);
@@ -58,7 +77,6 @@ public class JpaCostRepositoryImpl implements CostRepository {
     @Transactional
     public boolean delete(int costId, int userId)
     {
-
         return em.createNamedQuery(Cost.DELETE)
                 .setParameter("id",costId)
                 .setParameter("userId", userId)

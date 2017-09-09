@@ -1,6 +1,6 @@
 package de.shokhor.costs.repository;
 
-import de.shokhor.costs.model.CostGroup;
+import de.shokhor.costs.model.Cost.TypeCost;
 
 import java.util.List;
 
@@ -9,11 +9,11 @@ import java.util.List;
  */
 public interface GroupRepository
 {
-    CostGroup save (CostGroup costGroup, int userId);
+    TypeCost save (TypeCost typeCost, int userId);
 
     boolean delete (int groupId, int userId);
 
-    CostGroup get (int groupId, int userId);
+    TypeCost get (int groupId, int userId);
 
-    List<CostGroup> getAll (int userId);
+    List<TypeCost> getAll (int userId);
 }

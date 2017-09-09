@@ -1,13 +1,11 @@
 package de.shokhor.costs.web.json;
 
 import de.shokhor.costs.costTestData;
-import de.shokhor.costs.model.Cost;
+import de.shokhor.costs.model.Cost.Cost;
 import org.junit.Test;
 
 
 import java.util.List;
-
-import static de.shokhor.costs.costTestData.COST_ADMIN1;
 
 /**
  * GKislin

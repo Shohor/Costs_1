@@ -1,6 +1,6 @@
 package de.shokhor.costs.service;
 
-import de.shokhor.costs.model.User;
+import de.shokhor.costs.model.User.User;
 
 import java.util.List;
 
@@ -12,11 +12,13 @@ public interface UserService {
 
     User update (User user);
 
-    boolean delete (int userId);
+    void delete (int userId);
 
     User get (int userId);
 
     User getByEmail (String email);
+
+    void enable(int id, boolean enable);
 
     List<User> getAll ();
 }

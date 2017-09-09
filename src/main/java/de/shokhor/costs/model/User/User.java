@@ -1,6 +1,12 @@
-package de.shokhor.costs.model;
+package de.shokhor.costs.model.User;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import de.shokhor.costs.model.BaseEntity;
+import de.shokhor.costs.model.CashAccountsAndCards;
+import de.shokhor.costs.model.Cost.Cost;
+import de.shokhor.costs.model.Cost.TypeCost;
+import de.shokhor.costs.model.Income.Income;
+import de.shokhor.costs.model.Income.TypeIncome;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -52,6 +58,9 @@ public class User extends BaseEntity {
     @NotNull
     private LocalDateTime registred;
 
+    @Column(name = "enabled")
+    private boolean enabled=true;
+
     @Enumerated(EnumType.STRING)
     @CollectionTable(name = "roles", joinColumns = @JoinColumn(name = "user_id"))
     @Column(name = "Role")
@@ -62,14 +71,23 @@ public class User extends BaseEntity {
     @JsonIgnore
     private List<Cost> costs;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "user")
     @JsonIgnore
-    private List<CostGroup> costGroups;
+    private List<TypeCost> typeCosts;
+
+    @OneToMany(mappedBy = "user")
+    private List<Income> incomes;
+
+    @OneToMany(mappedBy = "user")
+    private List<CashAccountsAndCards> cashAccountsAndCards;
+
+    @OneToMany(mappedBy = "user")
+    private List<TypeIncome> typeIncomes;
 
     public User() {
     }
 
-    public User(Integer id, String firstName, String sirname, String email, int age, String password, Role role, Role... roles) {
+    public User(Integer id, String firstName, String sirname, String email, int age, String password, boolean enabled, Role role, Role... roles) {
         super(id);
         this.firstName = firstName;
         this.sirname = sirname;
@@ -78,22 +96,10 @@ public class User extends BaseEntity {
         this.registred = LocalDateTime.now();
         this.password = password;
         EnumSet.of(role,roles);
+        this.enabled=enabled;
     }
 
-    public User(int id, String firstName, String sirname, String email, int age, String password, LocalDateTime registred, Set<Role> role, List<Cost> costs, List<CostGroup> costGroups) {
-        super(id);
-        this.firstName = firstName;
-        this.sirname = sirname;
-        this.email = email;
-        this.age = age;
-        this.password = password;
-        this.registred = registred;
-        this.role = role;
-        this.costs = costs;
-        this.costGroups = costGroups;
-    }
-
-    public User(int id, String firstName, String sirname, String email, int age, String password, LocalDateTime registred, Role role, Role...roles) {
+    public User(int id, String firstName, String sirname, String email, int age, String password, LocalDateTime registred, boolean enabled, Role role, Role...roles) {
         super(id);
         this.firstName = firstName;
         this.sirname = sirname;
@@ -102,6 +108,7 @@ public class User extends BaseEntity {
         this.password = password;
         this.registred = registred;
         EnumSet.of(role,roles);
+        this.enabled=enabled;
     }
 
     public String getFirstName() {
@@ -169,11 +176,43 @@ public class User extends BaseEntity {
         this.costs = costs;
     }
 
-    public List<CostGroup> getCostGroups() {
-        return costGroups;
+    public List<TypeCost> getTypeCosts() {
+        return typeCosts;
     }
 
-    public void setCostGroups(List<CostGroup> costGroups) {
-        this.costGroups = costGroups;
+    public void setTypeCosts(List<TypeCost> typeCosts) {
+        this.typeCosts = typeCosts;
+    }
+
+    public List<Income> getIncomes() {
+        return incomes;
+    }
+
+    public void setIncomes(List<Income> incomes) {
+        this.incomes = incomes;
+    }
+
+    public List<CashAccountsAndCards> getCashAccountsAndCards() {
+        return cashAccountsAndCards;
+    }
+
+    public void setCashAccountsAndCards(List<CashAccountsAndCards> cashAccountsAndCards) {
+        this.cashAccountsAndCards = cashAccountsAndCards;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public List<TypeIncome> getTypeIncomes() {
+        return typeIncomes;
+    }
+
+    public void setTypeIncomes(List<TypeIncome> typeIncomes) {
+        this.typeIncomes = typeIncomes;
     }
 }

@@ -1,8 +1,8 @@
 package de.shokhor.costs.web.user;
 
 import de.shokhor.costs.AuthorizedUser;
-import de.shokhor.costs.model.Role;
-import de.shokhor.costs.model.User;
+import de.shokhor.costs.model.User.Role;
+import de.shokhor.costs.model.User.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;

@@ -1,6 +1,6 @@
 package de.shokhor.costs.web.user;
 
-import de.shokhor.costs.model.User;
+import de.shokhor.costs.model.User.User;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 

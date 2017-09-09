@@ -1,7 +1,7 @@
 package de.shokhor.costs.web.group;
 
 import de.shokhor.costs.AuthorizedUser;
-import de.shokhor.costs.model.CostGroup;
+import de.shokhor.costs.model.Cost.TypeCost;
 import de.shokhor.costs.service.GroupService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,32 +23,32 @@ public abstract class AbstractGroupController {
         service.delete(id,userId);
     }
 
-    public CostGroup get(int id)
+    public TypeCost get(int id)
     {
         int userId = AuthorizedUser.id();
         LOG.info("Get group{} for User{}", id, userId);
         return service.get(id,userId);
     }
 
-    public List<CostGroup> getAll()
+    public List<TypeCost> getAll()
     {
         int userId = AuthorizedUser.id();
         LOG.info("Get all groups for User{}", userId);
         return service.getAll(userId);
     }
 
-    public CostGroup create (CostGroup costGroup)
+    public TypeCost create (TypeCost typeCost)
     {
-        costGroup.setId(null);
+        typeCost.setId(null);
         int userId = AuthorizedUser.id();
-        LOG.info("Create costGroup for User{}", userId);
-        return service.save(costGroup,userId);
+        LOG.info("Create typeCost for User{}", userId);
+        return service.save(typeCost,userId);
     }
 
-    public CostGroup update(CostGroup costGroup)
+    public TypeCost update(TypeCost typeCost)
     {
         int userId = AuthorizedUser.id();
-        LOG.info("Update costGroup{} for User{}", costGroup.getId(), userId);
-        return service.save(costGroup, userId);
+        LOG.info("Update typeCost{} for User{}", typeCost.getId(), userId);
+        return service.save(typeCost, userId);
     }
 }

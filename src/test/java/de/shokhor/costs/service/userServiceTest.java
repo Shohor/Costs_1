@@ -1,8 +1,10 @@
 package de.shokhor.costs.service;
 
-import de.shokhor.costs.model.User;
+import de.shokhor.costs.model.User.User;
 import de.shokhor.costs.testService;
-import org.hibernate.mapping.Collection;
+import de.shokhor.costs.util.PasswordUtil;
+import de.shokhor.costs.util.exception.NotFoundException;
+import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -23,6 +25,7 @@ public class userServiceTest extends testService {
     public void testSave()
     {
         User userActual = getCreated();
+        userActual.setPassword(PasswordUtil.encode(userActual.getPassword()));
         service.save(userActual);
         MATCHER.assertEquals(userActual,service.get(userActual.getId()));
     }
@@ -31,16 +34,22 @@ public class userServiceTest extends testService {
     public void testUpdate()
     {
         User userActual = getUpdate();
+        userActual.setPassword(PasswordUtil.encode(userActual.getPassword()));
         service.save(userActual);
         MATCHER.assertEquals(userActual,service.get(userActual.getId()));
     }
 
-    /*@Test
+    @Test
     public void testDelete()
     {
         service.delete(USER_ID);
         MATCHER.assertCollectionEquals(Collections.singleton(USER),service.getAll());
-    }*/
+    }
+
+    @Test(expected = NotFoundException.class)
+    public void testNotFoundDelete() throws Exception {
+        service.delete(5);
+    }
 
     @Test
     public void testGet()
@@ -49,17 +58,29 @@ public class userServiceTest extends testService {
         MATCHER.assertEquals(userActual,ADMIN);
     }
 
-    /*@Test
+    @Test(expected = NotFoundException.class)
+    public void testGetNotFound() throws Exception {
+        service.get(4);
+    }
+
+    @Test
     public void testGetAll()
     {
         List<User> users = service.getAll();
         MATCHER.assertCollectionEquals(USERS, users);
     }
-*/
     @Test
     public void testGetByEmail()
     {
         User userActual = service.getByEmail("shohor@mail.ru");
         MATCHER.assertEquals(userActual, ADMIN);
+    }
+
+    @Test
+    public void testSetEnabledEquals() {
+        service.enable(USER_ID, false);
+        Assert.assertFalse(service.get(USER_ID).isEnabled());
+        service.enable(USER_ID, true);
+        Assert.assertTrue(service.get(USER_ID).isEnabled());
     }
 }

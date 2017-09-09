@@ -1,6 +1,6 @@
 package de.shokhor.costs.web.group;
 
-import de.shokhor.costs.model.CostGroup;
+import de.shokhor.costs.model.Cost.TypeCost;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -15,13 +15,13 @@ import java.util.List;
 public class AjaxGroupController extends AbstractGroupController {
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<CostGroup> getAll() {
-        List<CostGroup> costGroupList = super.getAll();
-        return costGroupList;
+    public List<TypeCost> getAll() {
+        List<TypeCost> typeCostList = super.getAll();
+        return typeCostList;
     }
 
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public CostGroup get (@PathVariable("id") int id)
+    public TypeCost get (@PathVariable("id") int id)
     {
         return super.get(id);
     }
@@ -32,17 +32,17 @@ public class AjaxGroupController extends AbstractGroupController {
     }
 
     @PostMapping
-    public ResponseEntity<String> updateOrCreate(@Valid CostGroup costGroup, BindingResult result){
+    public ResponseEntity<String> updateOrCreate(@Valid TypeCost typeCost, BindingResult result){
         if (result.hasErrors())
         {
             StringBuilder sb = new StringBuilder();
             result.getFieldErrors().forEach(fe -> sb.append(fe.getField()).append(" ").append(fe.getDefaultMessage()).append("<br>"));
             return new ResponseEntity<>(sb.toString(), HttpStatus.UNPROCESSABLE_ENTITY);
         }
-        if (costGroup.isNew()) {
-            super.create(costGroup);
+        if (typeCost.isNew()) {
+            super.create(typeCost);
         } else {
-            super.update(costGroup);
+            super.update(typeCost);
         }
         return new ResponseEntity<>(HttpStatus.OK);
     }

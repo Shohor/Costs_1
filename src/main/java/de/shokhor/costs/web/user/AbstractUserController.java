@@ -1,11 +1,10 @@
 package de.shokhor.costs.web.user;
 
-import de.shokhor.costs.model.User;
+import de.shokhor.costs.model.User.User;
 import de.shokhor.costs.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 
 import java.util.List;
 

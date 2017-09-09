@@ -12,23 +12,23 @@
 <div class="jumbotron">
     <div class="container">
         <div class="shadow">
-            <h3><fmt:message key="costGroups.title"/></h3>
+            <h3><fmt:message key="groups.title"/></h3>
             <div class="view-box">
-                <a class="btn btn-sm btn-info" onclick="add()"><fmt:message key="costGroups.add"/></a>
+                <a class="btn btn-sm btn-info" onclick="add()"><fmt:message key="groups.add"/></a>
                 <table class="table table-striped display" id="datatable">
                     <thead>
                     <tr>
-                        <th><fmt:message key="costGroups.name"/></th>
+                        <th><fmt:message key="groups.name"/></th>
                         <th></th>
                         <th></th>
                     </tr>
                     </thead>
-                    <%--<c:forEach items="${costGroupList}" var="costGroups">
-                        <jsp:useBean id="costGroups" scope="page" type="de.shokhor.costs.model.CostGrouproup"/>
+                    <%--<c:forEach items="${typeCostList}" var="typeCosts">
+                        <jsp:useBean id="typeCosts" scope="page" type="de.shokhor.costs.model.CostGrouproup"/>
                         <tr>
-                            <td>${costGroups.costGroup}</td>
+                            <td>${typeCosts.typeCost}</td>
                             <td><a class="btn btn-xs btn-primary edit"><fmt:message key="common.update"/></a></td>
-                            <td><a class="btn btn-xs btn-danger delete" onclick="deleteRow(${costGroups.id})"><fmt:message key="common.delete"/></a></td>
+                            <td><a class="btn btn-xs btn-danger delete" onclick="deleteRow(${typeCosts.id})"><fmt:message key="common.delete"/></a></td>
                         </tr>
                     </c:forEach>--%>
                 </table>
@@ -42,21 +42,21 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h2 class="modal-title"><fmt:message key="costGroups.edit"/></h2>
+                <h2 class="modal-title"><fmt:message key="groups.edit"/></h2>
             </div>
             <div class="modal-body">
                 <form class="form-horizontal" method="post" id="detailsForm">
                     <input type="text" hidden="hidden" id="id" name="id">
 
-                    <div class="form-costGroup">
-                        <label for="costGroup" class="control-label col-xs-3"><fmt:message key="costGroups.add"/></label>
+                    <div class="form-typeCost">
+                        <label for="typeCost" class="control-label col-xs-3"><fmt:message key="groups.add"/></label>
 
                         <div class="col-xs-9">
-                            <input type="text" class="form-control" id="costGroup" name="costGroup" placeholder="<fmt:message key="costs.costGroup"/>">
+                            <input type="text" class="form-control" id="typeCost" name="typeCost" placeholder="<fmt:message key="costs.typeCost"/>">
                         </div>
                     </div>
 
-                    <div class="form-costGroup">
+                    <div class="form-typeCost">
                         <div class="col-xs-offset-3 col-xs-9">
                             <button type="button" class="btn btn-primary" onclick="save()"><fmt:message key="common.save"/></button>
                         </div>

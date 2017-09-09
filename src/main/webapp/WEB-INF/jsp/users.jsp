@@ -28,7 +28,7 @@
                                 </tr>
                             </thead>
                            <%-- <c:forEach items="${userList}" var="user">
-                                <jsp:useBean id="user" scope="page" type="de.shokhor.costs.model.User"/>
+                                <jsp:useBean id="user" scope="page" type="de.shokhor.costs.model.User.User"/>
                                 <tr>
                                     <td>${user.firstName}</td>
                                     <td>${user.sirname}</td>
@@ -59,7 +59,7 @@
                         <form class="form-horizontal" method="post" id="detailsForm">
                             <input type="text" hidden="hidden" id="id" name="id">
 
-                            <div class="form-costGroup">
+                            <div class="form-typeCost">
                                 <label for="firstName" class="control-label col-xs-3"><fmt:message key="users.name"/></label>
 
                                 <div class="col-xs-9">
@@ -67,7 +67,7 @@
                                 </div>
                             </div>
 
-                            <div class="form-costGroup">
+                            <div class="form-typeCost">
                                 <label for="sirname" class="control-label col-xs-3"><fmt:message key="users.sirname"/></label>
 
                                 <div class="col-xs-9">
@@ -75,7 +75,7 @@
                                 </div>
                             </div>
 
-                            <div class="form-costGroup">
+                            <div class="form-typeCost">
                                 <label for="age" class="control-label col-xs-3"><fmt:message key="users.age"/></label>
 
                                 <div class="col-xs-9">
@@ -83,7 +83,7 @@
                                 </div>
                             </div>
 
-                            <div class="form-costGroup">
+                            <div class="form-typeCost">
                                 <label for="email" class="control-label col-xs-3"><fmt:message key="users.email"/></label>
 
                                 <div class="col-xs-9">
@@ -91,7 +91,7 @@
                                 </div>
                             </div>
 
-                            <div class="form-costGroup">
+                            <div class="form-typeCost">
                                 <label for="password" class="control-label col-xs-3"><fmt:message key="users.password"/></label>
 
                                 <div class="col-xs-9">
@@ -99,7 +99,7 @@
                                 </div>
                             </div>
 
-                            <div class="form-costGroup">
+                            <div class="form-typeCost">
                                 <div class="col-xs-offset-3 col-xs-9">
                                     <button type="button" class="btn btn-primary" onclick="save()"><fmt:message key="common.save"/></button>
                                 </div>

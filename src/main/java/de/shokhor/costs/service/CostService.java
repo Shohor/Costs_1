@@ -1,6 +1,6 @@
 package de.shokhor.costs.service;
 
-import de.shokhor.costs.model.Cost;
+import de.shokhor.costs.model.Cost.Cost;
 import de.shokhor.costs.to.CostTo;
 
 import java.time.LocalDate;
@@ -15,7 +15,7 @@ public interface CostService {
 
     Cost update (CostTo costTo, int userId);
 
-    boolean delete (int costId, int userId);
+    void delete (int costId, int userId);
 
     Cost get (int costId, int userId);
 
@@ -24,6 +24,8 @@ public interface CostService {
     List<Cost> getAllByGroup (int userId, int groupId);
 
     Cost save(Cost cost, int userId, int groupId);
+
+    Cost save(Cost cost, int userId, int groupId, int cashAccountsAndCardsId);
 
     List<Cost> getFilteredList (int userId, Integer groupId, LocalDate startDate, LocalDate endDate);
 

@@ -10,15 +10,6 @@ function updateTable() {
     });
 }
 
-function updateTable1() {
-    $.ajax({
-        type: "POST",
-        url: ajaxUrl + 'bygroup',
-        data: $('#bygroup').serialize(),
-        success: updateTableByData
-    });
-}
-
 $(function () {
     datatableApi = $('#datatable').DataTable({
         "ajax": {
@@ -26,20 +17,9 @@ $(function () {
             "type": "GET",
             "dataSrc": ""
         },
-        "paging": false,
+        "paging": true,
         "info": true,
         "columns": [
-            {
-                "data": "group.group",
-                /*"render": function (data, type, row) {
-                    if (type == 'display'){
-                        return '<span>'+row.group.group+ '</span>';
-                    }
-                }*/
-            },
-            {
-                "data": "price"
-            },
             {
                 "data": "date",
                 "render": function (date, type, row) {
@@ -48,6 +28,20 @@ $(function () {
                     }
                     return date;
                 }
+            },
+            {
+                "data": "typeGroup.type",
+                /*"render": function (data, type, row) {
+                    if (type == 'display'){
+                        return '<span>'+row.group.group+ '</span>';
+                    }
+                }*/
+            },
+            {
+                "data": "amount"
+            },
+            {
+                "data": "cashAccountsAndCards.type"
             },
             {
                 "data": "description",

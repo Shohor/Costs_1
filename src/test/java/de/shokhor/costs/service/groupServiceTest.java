@@ -1,7 +1,8 @@
 package de.shokhor.costs.service;
 
-import de.shokhor.costs.model.CostGroup;
+import de.shokhor.costs.model.Cost.TypeCost;
 import de.shokhor.costs.testService;
+import de.shokhor.costs.util.exception.NotFoundException;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -22,17 +23,17 @@ public class groupServiceTest extends testService {
     @Test
     public void testSave()
     {
-        CostGroup costGroupActual = getCreated();
-        service.save(costGroupActual,USER_ID);
-        MATCHER.assertEquals(costGroupActual,service.get(costGroupActual.getId(),USER_ID));
+        TypeCost typeCostActual = getCreated();
+        service.save(typeCostActual,USER_ID);
+        MATCHER.assertEquals(typeCostActual,service.get(typeCostActual.getId(),USER_ID));
     }
 
     @Test
     public void testUpdate()
     {
-        CostGroup costGroupActual = getUpdate();
-        service.save(costGroupActual,USER_ID);
-        MATCHER.assertEquals(costGroupActual,service.get(costGroupActual.getId(),USER_ID));
+        TypeCost typeCostActual = getUpdate();
+        service.save(typeCostActual,USER_ID);
+        MATCHER.assertEquals(typeCostActual,service.get(typeCostActual.getId(),USER_ID));
     }
 
     @Test
@@ -42,17 +43,27 @@ public class groupServiceTest extends testService {
         MATCHER.assertCollectionEquals(Arrays.asList(COST_GROUP_2, COST_GROUP_4),service.getAll(USER_ID));
     }
 
+    @Test(expected = NotFoundException.class)
+    public void testNotFoundDelete() throws Exception {
+        service.delete(8, 4);
+    }
+
     @Test
     public void testGet()
     {
-        CostGroup costGroupActual = service.get(GROUP_ID,USER_ID);
-        MATCHER.assertEquals(costGroupActual, COST_GROUP_1);
+        TypeCost typeCostActual = service.get(GROUP_ID,USER_ID);
+        MATCHER.assertEquals(typeCostActual, COST_GROUP_1);
+    }
+
+    @Test(expected = NotFoundException.class)
+    public void testGetNotFound() throws Exception {
+        service.get(8, 5);
     }
 
     @Test
     public void testGetAll()
     {
-        List<CostGroup> groupsActual = service.getAll(USER_ID);
+        List<TypeCost> groupsActual = service.getAll(USER_ID);
         MATCHER.assertCollectionEquals(COST_GROUPS,groupsActual);
 
     }

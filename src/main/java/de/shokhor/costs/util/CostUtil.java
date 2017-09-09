@@ -1,6 +1,6 @@
 package de.shokhor.costs.util;
 
-import de.shokhor.costs.model.Cost;
+import de.shokhor.costs.model.Cost.Cost;
 import de.shokhor.costs.to.CostTo;
 
 public class CostUtil {

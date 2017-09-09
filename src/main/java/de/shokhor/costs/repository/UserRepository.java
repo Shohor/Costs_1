@@ -1,6 +1,6 @@
 package de.shokhor.costs.repository;
 
-import de.shokhor.costs.model.User;
+import de.shokhor.costs.model.User.User;
 
 import java.util.List;
 

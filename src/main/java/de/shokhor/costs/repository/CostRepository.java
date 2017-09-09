@@ -1,6 +1,6 @@
 package de.shokhor.costs.repository;
 
-import de.shokhor.costs.model.Cost;
+import de.shokhor.costs.model.Cost.Cost;
 import de.shokhor.costs.to.CostTo;
 
 import java.time.LocalDate;
@@ -22,6 +22,8 @@ public interface CostRepository
     List<Cost> getAllByGroup (int userId, int groupId);
 
     Cost save(Cost cost, int userId, int groupId);
+
+    Cost save(Cost cost, int userId, int groupId, int cashAccountsAndCardsId);
 
     List<Cost> getFilteredList (int userId, Integer groupId, LocalDate startDate, LocalDate endDate);
 

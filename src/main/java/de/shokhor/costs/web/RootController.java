@@ -1,7 +1,7 @@
 package de.shokhor.costs.web;
 
 import de.shokhor.costs.AuthorizedUser;
-import de.shokhor.costs.model.User;
+import de.shokhor.costs.model.User.User;
 import de.shokhor.costs.service.CostService;
 import de.shokhor.costs.service.GroupService;
 import de.shokhor.costs.service.UserService;
@@ -13,9 +13,6 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 
 @Controller
 public class RootController extends AbstractUserController {

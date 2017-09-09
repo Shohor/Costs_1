@@ -1,7 +1,7 @@
 package de.shokhor.costs;
 
 import de.shokhor.costs.matcher.ModelMatcher;
-import de.shokhor.costs.model.CostGroup;
+import de.shokhor.costs.model.Cost.TypeCost;
 
 import java.util.Arrays;
 import java.util.List;
@@ -11,25 +11,25 @@ import java.util.List;
  */
 public class groupTestData {
 
-    public static final ModelMatcher<CostGroup> MATCHER = ModelMatcher.of(CostGroup.class);
+    public static final ModelMatcher<TypeCost> MATCHER = ModelMatcher.of(TypeCost.class);
 
     public static final int GROUP_ID = 1;
 
-    public static final CostGroup COST_GROUP_1 = new CostGroup(GROUP_ID +0, "Food");
-    public static final CostGroup COST_GROUP_2 = new CostGroup(GROUP_ID +1, "Children");
-    public static final CostGroup COST_GROUP_3 = new CostGroup(GROUP_ID +2, "House");
-    public static final CostGroup COST_GROUP_4 = new CostGroup(GROUP_ID +3, "Presents");
-    public static final CostGroup COST_GROUP_5 = new CostGroup(GROUP_ID +4, "Food");
+    public static final TypeCost COST_GROUP_1 = new TypeCost(GROUP_ID +0, "Food");
+    public static final TypeCost COST_GROUP_2 = new TypeCost(GROUP_ID +1, "Children");
+    public static final TypeCost COST_GROUP_3 = new TypeCost(GROUP_ID +2, "House");
+    public static final TypeCost COST_GROUP_4 = new TypeCost(GROUP_ID +3, "Presents");
+    public static final TypeCost COST_GROUP_5 = new TypeCost(GROUP_ID +4, "Food");
 
-    public static final List<CostGroup> COST_GROUPS = Arrays.asList(COST_GROUP_1, COST_GROUP_2, COST_GROUP_4);
+    public static final List<TypeCost> COST_GROUPS = Arrays.asList(COST_GROUP_1, COST_GROUP_2, COST_GROUP_4);
 
-    public static final CostGroup getCreated()
+    public static final TypeCost getCreated()
     {
-        return new CostGroup(GROUP_ID+5,"New group");
+        return new TypeCost(GROUP_ID+5,"New group");
     }
 
-    public static final CostGroup getUpdate()
+    public static final TypeCost getUpdate()
     {
-        return new CostGroup(GROUP_ID+0, "UpdateFood");
+        return new TypeCost(GROUP_ID+0, "UpdateFood");
     }
 }
