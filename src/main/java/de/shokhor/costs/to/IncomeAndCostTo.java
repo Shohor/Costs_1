@@ -16,7 +16,6 @@ public class IncomeAndCostTo
 
     private double amount;
 
-
     private boolean incomeOrCost;
 
     private LocalDate date;
@@ -25,27 +24,31 @@ public class IncomeAndCostTo
 
     private String description;
 
+    private static double summ=0;
+
     public IncomeAndCostTo() {
     }
 
     public IncomeAndCostTo(Cost cost)
     {
+        this.summ=this.summ-cost.getAmount();
         this.id= cost.getId();
         this.type = cost.getTypeCost().getType();
-        this.amount=cost.getAmount();
+        this.amount=-cost.getAmount();
         this.incomeOrCost=false;
-        this.cashAccountsAndCards=cost.getCashAccountsAndCards().getType().toString();
+        this.cashAccountsAndCards=cost.getCashAccountsAndCards().getType().toString()+" "+cost.getCashAccountsAndCards().getDescription();
         this.description=cost.getDescription();
         this.date=cost.getDate();
     }
 
     public IncomeAndCostTo(Income income)
     {
+        this.summ=this.summ+income.getAmount();
         this.id= income.getId();
         this.type = income.getTypeIncome().getType();
         this.amount=income.getAmount();
         this.incomeOrCost=true;
-        this.cashAccountsAndCards=income.getCashAccountsAndCards().getType().toString();
+        this.cashAccountsAndCards=income.getCashAccountsAndCards().getType().toString()+" "+income.getCashAccountsAndCards().getDescription();
         this.description=income.getDescription();
         this.date=income.getDate();
     }

@@ -1,5 +1,6 @@
 package de.shokhor.costs.to;
 
+import de.shokhor.costs.model.Cost.Cost;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotNull;
@@ -7,14 +8,17 @@ import java.time.LocalDate;
 
 public class CostTo {
 
-    @NotNull
     private Integer id;
 
     @NotNull
     private int typeId;
 
+    private String type;
+
+    private String cashAccountsAndCards;
+
     @NotNull
-    private double price;
+    private double amount;
 
     @NotNull
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
@@ -28,13 +32,22 @@ public class CostTo {
     public CostTo() {
     }
 
-    public CostTo(Integer id, int typeId, LocalDate date, double price, int cashAccountsAndCardsId, String description) {
+    public CostTo(Integer id, int typeId, LocalDate date, double amount, int cashAccountsAndCardsId, String description) {
         this.id = id;
         this.typeId = typeId;
-        this.price = price;
+        this.amount = amount;
         this.description = description;
         this.date = date;
         this.cashAccountsAndCardsId = cashAccountsAndCardsId;
+    }
+
+    public CostTo(Cost cost) {
+        this.id = cost.getId();
+        this.type = cost.getTypeCost().getType();
+        this.cashAccountsAndCards = cost.getCashAccountsAndCards().getType().toString();
+        this.amount = cost.getAmount();
+        this.date = cost.getDate();
+        this.description = cost.getDescription();
     }
 
     public Integer getId() {
@@ -53,12 +66,12 @@ public class CostTo {
         this.typeId = typeId;
     }
 
-    public double getPrice() {
-        return price;
+    public double getAmount() {
+        return amount;
     }
 
-    public void setPrice(double price) {
-        this.price = price;
+    public void setAmount(double amount) {
+        this.amount = amount;
     }
 
     public String getDescription() {
@@ -88,5 +101,21 @@ public class CostTo {
 
     public void setCashAccountsAndCardsId(int cashAccountsAndCardsId) {
         this.cashAccountsAndCardsId = cashAccountsAndCardsId;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getCashAccountsAndCards() {
+        return cashAccountsAndCards;
+    }
+
+    public void setCashAccountsAndCards(String cashAccountsAndCards) {
+        this.cashAccountsAndCards = cashAccountsAndCards;
     }
 }

@@ -5,6 +5,20 @@ function makeEditable() {
     $(document).ajaxError(function (event, jqXHR, options, jsExc) {
         failNoty(event, jqXHR, options, jsExc);
     });
+
+}
+
+function selectCostOrIncome(selectedValue) {
+    if (selectedValue=='cost')
+    {
+        $('#costTypeSelect').attr("hidden", null);
+        $('#incomeTypeSelect').attr("hidden","hidden");
+    }
+    if (selectedValue=='income')
+    {
+        $('#costTypeSelect').attr("hidden", "hidden");
+        $('#incomeTypeSelect').attr("hidden", null);
+    }
 }
 
 function add(add_title) {
@@ -13,9 +27,9 @@ function add(add_title) {
     $('#editRow').modal();
 }
 
-function updateRow(id) {
+function updateRow(id, incomeOrCost) {
     $('#modalTitle').html(edit_title);
-    $.get(ajaxUrl + id, function (data) {
+    $.get(ajaxUrl + incomeOrCost?"income/":"cost/" + id, function (data) {
         $.each(data, function (key, value) {
             form.find("input[name='" + key + "']").val(value);
         });
@@ -23,9 +37,9 @@ function updateRow(id) {
     });
 }
 
-function deleteRow(id) {
+function deleteRow(id, incomeOrCost) {
     $.ajax({
-        url: ajaxUrl + id,
+        url: ajaxUrl + incomeOrCost?"income/":"cost/" + id,
         type: 'DELETE',
         success: function () {
             updateTable();
@@ -49,12 +63,52 @@ function enable(chkbox, id) {
 
 function updateTableByData(data) {
     datatableApi.clear().rows.add(data).draw();
+    summ_amount(data);
+}
+
+function summ_amount(data) {
+    var summ=0;
+    $.each(data, function (index, value)
+    {
+        summ=summ+value.amount;
+    });
+    $('#summ').text(summ);
+}
+
+function costs() {
+    $('#costFilter').attr("hidden", null);
+    $('#incomeFilter').attr("hidden","hidden");
+    $.ajax({
+        url: ajaxUrl+'costs',
+        type: "GET",
+        success: updateTableByData
+    })
+}
+
+function costs_and_incomes() {
+    $('#costFilter').attr("hidden", null);
+    $('#incomeFilter').attr("hidden",null);
+    $.ajax({
+        url: ajaxUrl,
+        type: "GET",
+        success: updateTableByData
+    })
+}
+
+function incomes() {
+    $('#costFilter').attr("hidden", "hidden");
+    $('#incomeFilter').attr("hidden",null);
+    $.ajax({
+        url: ajaxUrl+'incomes',
+        type: "GET",
+        success: updateTableByData
+    })
 }
 
 function save() {
     $.ajax({
         type: "POST",
-        url: ajaxUrl,
+        url: ajaxUrl+($('#costOrIncome option:selected').text()=='Cost'?'saveCost':'saveIncome'),
         data: form.serialize(),
         success: function () {
             $('#editRow').modal('hide');
@@ -94,13 +148,13 @@ function failNoty(event, jqXHR, options, jsExc) {
 
 function renderEditBtn(data, type, row) {
     if (type == 'display') {
-        return '<a class="btn btn-xs btn-primary" onclick="updateRow(' + row.id + ');">'+i18n['common.update']+'</a>';
+        return '<a class="btn btn-xs btn-primary" onclick="updateRow(' + row.id + ','+row.incomeOrCost+ ');">'+i18n['common.update']+'</a>';
     }
 }
 
 function renderDeleteBtn(data, type, row) {
     if (type == 'display') {
-        return '<a class="btn btn-xs btn-danger" onclick="deleteRow(' + row.id + ');">'+i18n['common.delete']+'</a>';
+        return '<a class="btn btn-xs btn-danger" onclick="deleteRow(' + row.id +','+row.incomeOrCost+');">'+i18n['common.delete']+'</a>';
     }
 }
 function renderCostBtn(data, type, row) {

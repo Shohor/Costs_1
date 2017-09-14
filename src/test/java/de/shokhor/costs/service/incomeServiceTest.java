@@ -22,7 +22,7 @@ public class incomeServiceTest extends testService {
     public void testSave()
     {
         Income incomeActual = getCreated();
-        service.save(incomeActual, CASH_ACCOUNTS_AND_CARDS_ID+1, 1, USER_ID);
+        service.save(incomeActual, USER_ID);
         MATCHER.assertEquals(incomeActual,service.get(incomeActual.getId(),USER_ID));
     }
 
@@ -30,7 +30,7 @@ public class incomeServiceTest extends testService {
     public void testUpdate()
     {
         Income incomeActual = getUpdate();
-        service.save(incomeActual, CASH_ACCOUNTS_AND_CARDS_ID+1,1, USER_ID);
+        service.save(incomeActual, USER_ID);
         MATCHER
                 .assertEquals(incomeActual ,service.get(incomeActual.getId(),USER_ID));
     }

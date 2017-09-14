@@ -12,5 +12,6 @@
     <base href="${fn:substring(url, 0, fn:length(url) - fn:length(pageContext.request.requestURI))}${pageContext.re--%>quest.contextPath}/" />
     <%--<link rel="stylesheet" href="resources/css/style.css>--%>
     <link rel="stylesheet" href="webjars/bootstrap/3.3.7-1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="resources/css/style.css">
 </head>
 <body>

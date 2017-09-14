@@ -1,5 +1,6 @@
 package de.shokhor.costs.to;
 
+import de.shokhor.costs.model.Income.Income;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotNull;
@@ -7,7 +8,6 @@ import java.time.LocalDate;
 
 public class IncomeTo {
 
-    @NotNull
     private Integer id;
 
     @NotNull
@@ -15,6 +15,10 @@ public class IncomeTo {
 
     @NotNull
     private double amount;
+
+    private String type;
+
+    private String cashAccountsAndCards;
 
     @NotNull
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
@@ -26,6 +30,25 @@ public class IncomeTo {
     private String description;
 
     public IncomeTo() {
+    }
+
+    public IncomeTo(Income income)
+    {
+        this.id=income.getId();
+        this.cashAccountsAndCards=income.getCashAccountsAndCards().getType().toString();
+        this.amount=income.getAmount();
+        this.description=income.getDescription();
+        this.type=income.getTypeIncome().getType();
+        this.date=income.getDate();
+    }
+
+    public IncomeTo(Integer id, double amount, String type, String cashAccountsAndCards, LocalDate date, String description) {
+        this.id = id;
+        this.amount = amount;
+        this.type = type;
+        this.cashAccountsAndCards = cashAccountsAndCards;
+        this.date = date;
+        this.description = description;
     }
 
     public IncomeTo(Integer id, int typeId, LocalDate date, double amount, int cashAccountsAndCardsId, String description) {
@@ -88,6 +111,22 @@ public class IncomeTo {
 
     public void setCashAccountsAndCardsId(int cashAccountsAndCardsId) {
         this.cashAccountsAndCardsId = cashAccountsAndCardsId;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getCashAccountsAndCards() {
+        return cashAccountsAndCards;
+    }
+
+    public void setCashAccountsAndCards(String cashAccountsAndCards) {
+        this.cashAccountsAndCards = cashAccountsAndCards;
     }
 }
 

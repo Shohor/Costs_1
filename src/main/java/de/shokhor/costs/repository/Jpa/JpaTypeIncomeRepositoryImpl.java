@@ -46,7 +46,7 @@ public class JpaTypeIncomeRepositoryImpl implements TypeIncomeRepository {
 
     @Override
     public TypeIncome get(int id, int userId) {
-        return em.createNamedQuery(Income.GET, TypeIncome.class)
+        return em.createNamedQuery(TypeIncome.GET, TypeIncome.class)
                 .setParameter("id", id)
                 .setParameter("userId", userId)
                 .getSingleResult();
@@ -54,7 +54,7 @@ public class JpaTypeIncomeRepositoryImpl implements TypeIncomeRepository {
 
     @Override
     public List<TypeIncome> getAll(int userId) {
-        return em.createNamedQuery(Income.GET_ALL, TypeIncome.class)
+        return em.createNamedQuery(TypeIncome.GET_ALL, TypeIncome.class)
                 .setParameter("userId", userId)
                 .getResultList();
     }

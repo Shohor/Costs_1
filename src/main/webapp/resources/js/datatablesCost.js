@@ -1,7 +1,7 @@
 var ajaxUrl = 'ajax/cost/';
 var datatableApi;
 
-function updateTable() {
+function updateTableFilter() {
     $.ajax({
         type: "POST",
         url: ajaxUrl + 'filter',
@@ -10,12 +10,22 @@ function updateTable() {
     });
 }
 
+function updateTable() {
+    $.ajax({
+        type: "GET",
+        url: ajaxUrl,
+        "dataSrc": "",
+        success: updateTableByData
+    });
+}
+
+
 $(function () {
     datatableApi = $('#datatable').DataTable({
         "ajax": {
             "url": ajaxUrl,
             "type": "GET",
-            "dataSrc": ""
+            "dataSrc": "",
         },
         "paging": true,
         "info": true,
@@ -30,7 +40,7 @@ $(function () {
                 }
             },
             {
-                "data": "typeGroup.type",
+                "data": "type",
                 /*"render": function (data, type, row) {
                     if (type == 'display'){
                         return '<span>'+row.group.group+ '</span>';
@@ -41,7 +51,7 @@ $(function () {
                 "data": "amount"
             },
             {
-                "data": "cashAccountsAndCards.type"
+                "data": "cashAccountsAndCards"
             },
             {
                 "data": "description",
@@ -64,6 +74,15 @@ $(function () {
                 "asc"
             ]
         ],
+        "createdRow": function (row, data, dataIndex) {
+            if (data.incomeOrCost != undefined) {
+                $(row).addClass(data.incomeOrCost ? 'income' : 'cost');
+            }
+
+        },
+        "footerCallback": function( tfoot, data, start, end, display ) {
+            summ_amount(data);
+        },
         "initComplete": makeEditable
     });
 });

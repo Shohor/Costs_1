@@ -12,7 +12,8 @@ public class IncomeAndCostUtil
 {
     public static List<IncomeAndCostTo> transferIncomeAndCost(List<Cost> costs, List<Income> incomes)
     {
-        return ListUtils.union(incomes.stream().map(IncomeAndCostTo::new).collect(Collectors.toList()), costs.stream().map(IncomeAndCostTo::new).collect(Collectors.toList()));
+        return ListUtils.union(incomes.stream().map(IncomeAndCostTo::new).collect(Collectors.toList()),
+                costs.stream().map(IncomeAndCostTo::new).collect(Collectors.toList()));
 
     }
 }

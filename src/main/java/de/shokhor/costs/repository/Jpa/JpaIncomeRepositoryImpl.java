@@ -5,6 +5,8 @@ import de.shokhor.costs.model.Income.Income;
 import de.shokhor.costs.model.Income.TypeIncome;
 import de.shokhor.costs.model.User.User;
 import de.shokhor.costs.repository.IncomeRepository;
+import de.shokhor.costs.to.IncomeTo;
+import de.shokhor.costs.util.IncomeUtil;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,7 +15,7 @@ import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @Repository
-@Transactional(readOnly =true)
+@Transactional(readOnly = true)
 public class JpaIncomeRepositoryImpl implements IncomeRepository {
 
     @PersistenceContext
@@ -21,9 +23,29 @@ public class JpaIncomeRepositoryImpl implements IncomeRepository {
 
     @Transactional
     @Override
-    public Income save(Income income, int cashAccountsAndCards_id, int typeIncome_id, int userId) {
-        income.setCashAccountsAndCards(em.getReference(CashAccountsAndCards.class, cashAccountsAndCards_id));
-        income.setTypeIncome(em.getReference(TypeIncome.class, typeIncome_id));
+    public Income save(Income income, int userId) {
+        income.setCashAccountsAndCards(em.getReference(CashAccountsAndCards.class, income.getCashAccountsAndCards().getId()));
+        income.setTypeIncome(em.getReference(TypeIncome.class, income.getTypeIncome().getId()));
+        income.setUser(em.getReference(User.class, userId));
+        if (income.isNew())
+        {
+            em.persist(income);
+            return income;
+        }
+        else
+        {
+            em.merge(income);
+            return income;
+        }
+    }
+
+    @Override
+    @Transactional
+    public Income save(IncomeTo incomeTo, int userId)
+    {
+        Income income = IncomeUtil.createFromCostTo(incomeTo);
+        income.setTypeIncome(em.getReference(TypeIncome.class, incomeTo.getTypeId()));
+        income.setCashAccountsAndCards(em.getReference(CashAccountsAndCards.class, incomeTo.getCashAccountsAndCardsId()));
         income.setUser(em.getReference(User.class, userId));
         if (income.isNew())
         {

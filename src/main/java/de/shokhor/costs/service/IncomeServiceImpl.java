@@ -2,6 +2,7 @@ package de.shokhor.costs.service;
 
 import de.shokhor.costs.model.Income.Income;
 import de.shokhor.costs.repository.IncomeRepository;
+import de.shokhor.costs.to.IncomeTo;
 import de.shokhor.costs.util.exception.ExceptionUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,15 +17,15 @@ public class IncomeServiceImpl implements IncomeService{
     private IncomeRepository repository;
 
     @Override
-    public Income save(Income income, int cashAccountsAndCards_id, int typeIncome_id, int userId) {
+    public Income save(Income income, int userId) {
         Assert.notNull(income, "Income must be not null");
-        return repository.save(income, cashAccountsAndCards_id, typeIncome_id, userId);
+        return repository.save(income, userId);
     }
 
     @Override
-    public Income update(Income income, int cashAccountsAndCards_id, int typeIncome_id, int userId) {
+    public Income update(Income income, int userId) {
         Assert.notNull(income, "Income must be not null");
-        return ExceptionUtil.checkNotFoundWithId(repository.save(income, cashAccountsAndCards_id, typeIncome_id, userId), income.getId());
+        return ExceptionUtil.checkNotFoundWithId(repository.save(income, userId), income.getId());
     }
 
     @Override
@@ -40,5 +41,17 @@ public class IncomeServiceImpl implements IncomeService{
     @Override
     public List<Income> getAll(int userId) {
         return repository.getAll(userId);
+    }
+
+    @Override
+    public Income save(IncomeTo incomeTo, int userId) {
+        Assert.notNull(incomeTo, "Income must be not null");
+        return repository.save(incomeTo, userId);
+    }
+
+    @Override
+    public Income update(IncomeTo incomeTo, int userId) {
+        Assert.notNull(incomeTo, "Income must be not null");
+        return ExceptionUtil.checkNotFoundWithId(repository.save(incomeTo, userId), incomeTo.getId());
     }
 }

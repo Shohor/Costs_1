@@ -1,4 +1,4 @@
-package de.shokhor.costs.web.cost;
+package de.shokhor.costs.web.costAndIncome;
 
 
 import de.shokhor.costs.model.Cost.Cost;
@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = RestCostController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
-public class RestCostController extends AbstractCostController
+@RequestMapping(value = RestCostAndIncomeController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
+public class RestCostAndIncomeController extends AbstractCostAndIncomeController
 {
     static final String REST_URL = "/rest/user/costs";
 
@@ -28,19 +28,19 @@ public class RestCostController extends AbstractCostController
     @GetMapping
     public List<Cost> getAll ()
     {
-        return super.getAll();
+        return super.getAllCosts();
     }
 
     /*@PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Cost update(@RequestBody Cost cost, @RequestParam (value = "groupId") int groupId)
+    public Cost update(@RequestBody Cost costAndIncome, @RequestParam (value = "groupId") int groupId)
     {
-        return super.update(cost,groupId);
+        return super.update(costAndIncome,groupId);
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Cost create (@RequestBody Cost cost, @RequestParam (value = "groupId") int groupId)
+    public Cost create (@RequestBody Cost costAndIncome, @RequestParam (value = "groupId") int groupId)
     {
-        return super.create(cost, groupId);
+        return super.create(costAndIncome, groupId);
     }
 
     @GetMapping("/bygroup")

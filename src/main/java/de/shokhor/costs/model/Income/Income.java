@@ -32,14 +32,14 @@ public class Income extends BaseEntity
     @NotNull
     private LocalDate date;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "type_income_id")
     private TypeIncome typeIncome;
 
     @Column(name = "description")
     private String description;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "cash_accounts_and_cards_id")
     private CashAccountsAndCards cashAccountsAndCards;
 
@@ -49,7 +49,7 @@ public class Income extends BaseEntity
     @ElementCollection(fetch = FetchType.LAZY)
     private Set<Periodicity> periodicity;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User user;
 

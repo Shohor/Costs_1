@@ -28,9 +28,9 @@ public class JpaCostRepositoryImpl implements CostRepository {
     @Override
     @Transactional
     public Cost save(CostTo costTo, int userId) {
-
         Cost cost=CostUtil.createFromCostTo(costTo);
         cost.setTypeCost(em.getReference(TypeCost.class,costTo.getTypeId()));
+        cost.setCashAccountsAndCards(em.getReference(CashAccountsAndCards.class,costTo.getCashAccountsAndCardsId()));
         cost.setUser(em.getReference(User.class, userId));
         if (cost.isNew())
         {
