@@ -27,11 +27,14 @@ public class TypeCost extends BaseEntity {
     @NotNull
     private String type;
 
+    @Column(name = "description")
+    private String description;
+
     @OneToMany (mappedBy = "typeCost")
     @JsonIgnore
     private List<Cost> costs;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     @JsonIgnore
     private User user;

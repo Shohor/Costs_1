@@ -46,7 +46,7 @@
                     <cost:inputField label='${password}' name="password" inputType="password"/>
 
 
-                    <div class="form-typeCost">
+                    <div class="form-group">
                         <div class="col-xs-offset-2 col-xs-10">
                             <button type="submit" class="btn btn-primary">${saveButton}</button>
                         </div>

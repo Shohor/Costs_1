@@ -18,7 +18,7 @@ import static de.shokhor.costs.userTestData.USER_ID;
 public class groupServiceTest extends testService {
 
     @Autowired
-    protected GroupService service;
+    protected TypeCostService service;
 
     @Test
     public void testSave()

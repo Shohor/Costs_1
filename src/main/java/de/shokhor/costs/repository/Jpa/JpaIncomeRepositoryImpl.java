@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.time.LocalDate;
 import java.util.List;
 
 @Repository
@@ -80,6 +81,78 @@ public class JpaIncomeRepositoryImpl implements IncomeRepository {
     public List<Income> getAll(int userId) {
         return em.createNamedQuery(Income.GET_ALL, Income.class)
                 .setParameter("userId", userId)
+                .getResultList();
+    }
+
+    @Override
+    public List<Income> getAllByGroup(int userId, int typeIncomeId) {
+        return em.createNamedQuery(Income.BY_GROUP, Income.class)
+                .setParameter("userId", userId)
+                .setParameter("typeIncomeId", typeIncomeId)
+                .getResultList();
+    }
+
+    @Override
+    public List<Income> getFilteredList(int userId, Integer typeIncomeId, LocalDate startDate, LocalDate endDate) {
+        return em.createNamedQuery(Income.FILTER, Income.class)
+                .setParameter("userId", userId)
+                .setParameter("typeIncomeId", typeIncomeId)
+                .setParameter("startDate", startDate)
+                .setParameter("endDate", endDate)
+                .getResultList();
+    }
+
+    @Override
+    public List<Income> getBetween(int userId, LocalDate startDate, LocalDate endDate) {
+        return em.createNamedQuery(Income.GET_BETWEEN, Income.class)
+                .setParameter("userId", userId)
+                .setParameter("startDate", startDate)
+                .setParameter("endDate", endDate)
+                .getResultList();
+    }
+
+    @Override
+    public LocalDate minDate(int userId) {
+        return em.createNamedQuery(Income.MIN_DATE, LocalDate.class)
+                .setParameter("userId", userId)
+                .getSingleResult();
+    }
+
+    @Override
+    public LocalDate maxDate(int userId) {
+        return em.createNamedQuery(Income.MAX_DATE, LocalDate.class)
+                .setParameter("userId", userId)
+                .getSingleResult();
+    }
+
+    @Override
+    public List<Income> getBetweenByType(int userId, Integer typeIncomeId, LocalDate startDate, LocalDate endDate) {
+        return em.createNamedQuery(Income.GET_BETWEEN_BY_TYPE, Income.class)
+                .setParameter("userId", userId)
+                .setParameter("typeIncomeId", typeIncomeId)
+                .setParameter("startDate", startDate)
+                .setParameter("endDate", endDate)
+                .getResultList();
+    }
+
+    @Override
+    public List<Income> getBetweenByTypeAndCards(int userId, Integer cashAccountsAndCardsId, Integer typeIncomeId, LocalDate startDate, LocalDate endDate) {
+        return em.createNamedQuery(Income.GET_BETWEEN_BY_TYPE_CARDS, Income.class)
+                .setParameter("userId", userId)
+                .setParameter("typeIncomeId", typeIncomeId)
+                .setParameter("cashAccountsAndCardsId", cashAccountsAndCardsId)
+                .setParameter("startDate", startDate)
+                .setParameter("endDate", endDate)
+                .getResultList();
+    }
+
+    @Override
+    public List<Income> getBetweenByCards(int userId, Integer cashAccountsAndCardsId, LocalDate startDate, LocalDate endDate) {
+        return em.createNamedQuery(Income.GET_BETWEEN_BY_CARDS, Income.class)
+                .setParameter("userId", userId)
+                .setParameter("cashAccountsAndCardsId", cashAccountsAndCardsId)
+                .setParameter("startDate", startDate)
+                .setParameter("endDate", endDate)
                 .getResultList();
     }
 }

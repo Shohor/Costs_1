@@ -56,4 +56,20 @@ public class JpaCashAccountsAndCardsImpl implements CashAccountsAndCardsReposito
                 .setParameter("userId", userId)
                 .getResultList();
     }
+
+    @Override
+    public Double summIncome(int id, int userId) {
+        return em.createNamedQuery(CashAccountsAndCards.SUMM_INCOME, Double.class)
+                .setParameter("userId", userId)
+                .setParameter("id", id)
+                .getSingleResult();
+    }
+
+    @Override
+    public Double summCost(int id, int userId) {
+        return em.createNamedQuery(CashAccountsAndCards.SUMM_COST, Double.class)
+                .setParameter("userId", userId)
+                .setParameter("id", id)
+                .getSingleResult();
+    }
 }

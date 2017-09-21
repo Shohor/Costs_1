@@ -1,5 +1,6 @@
 package de.shokhor.costs.model.Income;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import de.shokhor.costs.model.BaseEntity;
 import de.shokhor.costs.model.User.User;
 
@@ -29,10 +30,12 @@ public class TypeIncome extends BaseEntity {
     private String description;
 
     @OneToMany(mappedBy = "typeIncome")
+    @JsonIgnore
     private List<Income> incomes;
 
-    @ManyToOne
+    @ManyToOne(fetch =FetchType.LAZY)
     @JoinColumn(name = "user_id")
+    @JsonIgnore
     private User user;
 
     public TypeIncome() {
@@ -67,5 +70,13 @@ public class TypeIncome extends BaseEntity {
 
     public void setIncomes(List<Income> incomes) {
         this.incomes = incomes;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

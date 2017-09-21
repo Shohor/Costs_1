@@ -17,6 +17,7 @@
                     </sec:authorize>
                     <c:if test="${pageContext.request.servletPath=='/WEB-INF/jsp/costs.jsp'}">
                         <a class="btn btn-info" role="button" href="groups"><fmt:message key="users.typeCosts"/></a>
+                        <a class="btn btn-info" role="button" href="accounts"><fmt:message key="common.accounts"/></a>
                     </c:if>
                     <a class="btn btn-info" role="button" href="profile">${user.sirname} <fmt:message key="app.profile"/></a>
                     <input type="submit" class="btn btn-primary" value="<fmt:message key="app.logout"/>">

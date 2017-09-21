@@ -21,25 +21,34 @@ function selectCostOrIncome(selectedValue) {
     }
 }
 
-function add(add_title) {
-    $('#modalTitle').html(add_title);
+function add() {
+    $('#modal-title').html(add_title);
     form.find(":input").val("");
     $('#editRow').modal();
 }
 
 function updateRow(id, incomeOrCost) {
-    $('#modalTitle').html(edit_title);
-    $.get(ajaxUrl + incomeOrCost?"income/":"cost/" + id, function (data) {
+    var select=incomeOrCost?"income":"cost";
+    $('#modal-title').html(edit_title);
+    $.get(ajaxUrl + select + '/' + id, function (data) {
         $.each(data, function (key, value) {
-            form.find("input[name='" + key + "']").val(value);
+            /*form.find("input[name='" + key + "']").val(value);*/
+            if ((typeof value) == 'object')
+            {
+                $('#'+key+'option:selected').text(value.type.toString());
+            }
+            else {
+                $('#' + key).val(value);
+            }
         });
+        selectCostOrIncome(select);
         $('#editRow').modal();
     });
 }
 
 function deleteRow(id, incomeOrCost) {
     $.ajax({
-        url: ajaxUrl + incomeOrCost?"income/":"cost/" + id,
+        url: ajaxUrl + (incomeOrCost ? 'income/' : 'cost/') + id,
         type: 'DELETE',
         success: function () {
             updateTable();
@@ -78,6 +87,7 @@ function summ_amount(data) {
 function costs() {
     $('#costFilter').attr("hidden", null);
     $('#incomeFilter').attr("hidden","hidden");
+    $('#typeSelected').val("Cost")
     $.ajax({
         url: ajaxUrl+'costs',
         type: "GET",
@@ -86,8 +96,9 @@ function costs() {
 }
 
 function costs_and_incomes() {
-    $('#costFilter').attr("hidden", null);
-    $('#incomeFilter').attr("hidden",null);
+    $('#costFilter').attr("hidden", "hidden");
+    $('#incomeFilter').attr("hidden", "hidden");
+    $('#typeSelected').val("incomeAndCost")
     $.ajax({
         url: ajaxUrl,
         type: "GET",
@@ -98,6 +109,7 @@ function costs_and_incomes() {
 function incomes() {
     $('#costFilter').attr("hidden", "hidden");
     $('#incomeFilter').attr("hidden",null);
+    $('#typeSelected').val("Income")
     $.ajax({
         url: ajaxUrl+'incomes',
         type: "GET",

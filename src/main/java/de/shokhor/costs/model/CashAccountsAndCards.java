@@ -1,11 +1,13 @@
 package de.shokhor.costs.model;
 
+import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import de.shokhor.costs.model.Cost.Cost;
 import de.shokhor.costs.model.Income.Income;
 import de.shokhor.costs.model.User.User;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Set;
@@ -13,7 +15,11 @@ import java.util.Set;
 @NamedQueries({
         @NamedQuery(name = CashAccountsAndCards.GET_ALL, query = "SELECT c FROM CashAccountsAndCards c WHERE c.user.id=:userId"),
         @NamedQuery(name = CashAccountsAndCards.GET, query = "SELECT c FROM CashAccountsAndCards c WHERE c.user.id=:userId AND c.id=:id"),
-        @NamedQuery(name = CashAccountsAndCards.DELETE, query = "DELETE FROM CashAccountsAndCards c WHERE c.user.id=:userId AND c.id=:id")
+        @NamedQuery(name = CashAccountsAndCards.DELETE, query = "DELETE FROM CashAccountsAndCards c WHERE c.user.id=:userId AND c.id=:id"),
+        @NamedQuery(name = CashAccountsAndCards.SUMM_INCOME, query = "SELECT SUM(i.amount) FROM CashAccountsAndCards c LEFT JOIN Income i ON i.cashAccountsAndCards.id=c.id WHERE c.user.id=:userId " +
+                "AND c.id=:id"),
+        @NamedQuery(name = CashAccountsAndCards.SUMM_COST, query = "SELECT SUM(c.amount) FROM CashAccountsAndCards a LEFT JOIN Cost c ON c.cashAccountsAndCards.id=a.id WHERE a.user.id=:userId " +
+                "AND a.id=:id")
 })
 
 @Entity
@@ -23,10 +29,11 @@ public class CashAccountsAndCards extends BaseEntity {
     public static final String GET_ALL = "CashAccountsAndCards.getall";
     public static final String GET = "CashAccountsAndCards.get";
     public static final String DELETE = "CashAccountsAndCards.delete";
+    public static final String SUMM_INCOME = "CashAccountsAndCards.SummIncome";
+    public static final String SUMM_COST = "CashAccountsAndCards.SummCost";
 
-    @Column(name = "amount")
-    @NotNull
-    private int amount;
+    @Transient
+    private double amount;
 
     @Enumerated(EnumType.STRING)
     @CollectionTable(name = "type_cash_accounts_and_cards", joinColumns = @JoinColumn(name = "cash_accounts_and_cards_id"))
@@ -38,13 +45,16 @@ public class CashAccountsAndCards extends BaseEntity {
     private String description;
 
     @OneToMany(mappedBy = "cashAccountsAndCards")
+    @JsonIgnore
     private List<Income> income;
 
     @OneToMany(mappedBy = "cashAccountsAndCards")
+    @JsonIgnore
     private List<Cost> costs;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
+    @JsonIgnore
     private User user;
 
     public CashAccountsAndCards() {
@@ -67,11 +77,11 @@ public class CashAccountsAndCards extends BaseEntity {
         this.user = user;
     }
 
-    public int getAmount() {
+    public double getAmount() {
         return amount;
     }
 
-    public void setAmount(int amount) {
+    public void setAmount(double amount) {
         this.amount = amount;
     }
 

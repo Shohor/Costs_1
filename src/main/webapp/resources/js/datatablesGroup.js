@@ -1,14 +1,19 @@
-var ajaxUrl = 'ajax/groups/';
-var datatableApi;
+var ajaxUrl = 'ajax/types/';
+var datatableApiCostType;
+var datatableApiIncomeType;
 
-function updateTable() {
-    $.get(ajaxUrl, updateTableByData);
+function updateTableCost() {
+    $.get(ajaxUrl+'cost', updateTableByDataCost);
+}
+
+function updateTableIncome() {
+    $.get(ajaxUrl+'income', updateTableByDataIncome);
 }
 
 $(function () {
-    datatableApi = $('#datatable').DataTable({
+    datatableApiCostType = $('#datatableCostType').DataTable({
         "ajax": {
-            "url": ajaxUrl,
+            "url": ajaxUrl+'cost',
             "type": "GET",
             "dataSrc": ""
         },
@@ -16,7 +21,7 @@ $(function () {
         "info": true,
         "columns": [
             {
-                "data": "group",
+                "data": "type",
                 /*"render": function (data, type, row) {
                     if (type == 'display'){
                         return '<span>'+data+ '</span>';
@@ -24,14 +29,18 @@ $(function () {
                 }*/
             },
             {
-                "orderable": false,
-                "defaultContent": "",
-                "render": renderEditBtn
+                "data": "description",
+                "defaultContent": ""
             },
             {
                 "orderable": false,
                 "defaultContent": "",
-                "render": renderDeleteBtn
+                "render": renderEditBtnCost
+            },
+            {
+                "orderable": false,
+                "defaultContent": "",
+                "render": renderDeleteBtnCost
             }
         ],
         "order": [
@@ -41,5 +50,48 @@ $(function () {
             ]
         ],
         "initComplete": makeEditable
+    });
+});
+
+
+$(function () {
+    datatableApiIncomeType = $('#datatableIncomeType').DataTable({
+        "ajax": {
+            "url": ajaxUrl+'income',
+            "type": "GET",
+            "dataSrc": ""
+        },
+        "paging": false,
+        "info": true,
+        "columns": [
+            {
+                "data": "type",
+                /*"render": function (data, type, row) {
+                    if (type == 'display'){
+                        return '<span>'+data+ '</span>';
+                    }
+                }*/
+            },
+            {
+                "data": "description",
+                "defaultContent": ""
+            },
+            {
+                "orderable": false,
+                "defaultContent": "",
+                "render": renderEditBtnIncome
+            },
+            {
+                "orderable": false,
+                "defaultContent": "",
+                "render": renderDeleteBtnIncome
+            }
+        ],
+        "order": [
+            [
+                0,
+                "asc"
+            ]
+        ]
     });
 });

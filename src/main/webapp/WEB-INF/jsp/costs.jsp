@@ -12,28 +12,29 @@
 <div class="jumbotron">
     <div class="container">
         <div class="shadow">
-            <h3><fmt:message key="costs.title"/></h3>
+            <h3><fmt:message key="common.title"/></h3>
             <div class="view-box">
                 <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
                     <div class="panel panel-default">
                         <div class="panel-heading" role="tab" id="headingOne">
                             <h4 class="panel-title">
                                 <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                    Параметры фильтрации
+                                    <fmt:message key="common.filter"/>
                                 </a>
                             </h4>
                         </div>
                         <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
                             <div class="panel-body">
                                 <form:form method="post" class="form-horizontal" role="form" id="filter">
+                                    <input type="text" id="typeSelected" hidden="hidden" value="incomeAndCost"/>
                                     <div class="form-group">
-                                        <label class="control-label col-sm-2" for="startDate"><fmt:message key="costs.startDate"/>:</label>
+                                        <label class="control-label col-sm-2" for="startDate"><fmt:message key="common.startDate"/>:</label>
 
                                         <div class="col-sm-2">
                                             <input type="date" class="form-control" name="startDate" id="startDate">
                                         </div>
 
-                                        <label class="control-label col-sm-2" for="endDate"><fmt:message key="costs.endDate"/>:</label>
+                                        <label class="control-label col-sm-2" for="endDate"><fmt:message key="common.endDate"/>:</label>
 
                                         <div class="col-sm-2">
                                             <input type="date" class="form-control" name="endDate" id="endDate">
@@ -41,7 +42,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label class="control-label col-sm-2" for="cashAccountsAndCards_filter"><fmt:message key="costs.typeCost"/>:</label>
+                                        <label class="control-label col-sm-2" for="cashAccountsAndCards_filter"><fmt:message key="accounts.type"/>:</label>
 
                                         <div class="col-xs-9">
                                             <select class="btn btn-default" name="cashAccountsAndCardsId" id="cashAccountsAndCards_filter">
@@ -55,8 +56,8 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <div id="incomeFilter">
-                                            <label class="control-label col-sm-2" for="typeIncome_filter"><fmt:message key="costs.typeCost"/>:</label>
+                                        <div id="incomeFilter" hidden="hidden">
+                                            <label class="control-label col-sm-2" for="typeIncome_filter"><fmt:message key="incomes.type"/>:</label>
 
                                             <div class="col-sm-2">
                                                 <select class="btn btn-default" name="typeIncomeId" id="typeIncome_filter">
@@ -69,7 +70,7 @@
                                             </div>
                                         </div>
 
-                                        <div id="costFilter">
+                                        <div id="costFilter" hidden="hidden">
                                             <label class="control-label col-sm-2" for="typeCost_filter"><fmt:message key="costs.typeCost"/>:</label>
 
                                             <div class="col-sm-2">
@@ -86,7 +87,7 @@
                                     <div class="form-group">
                                         <div class="col-sm-6"></div>
                                         <div class="col-sm-6">
-                                            <button class="btn btn-danger" type="reset">Сброс</button>
+                                            <button class="btn btn-danger" type="reset"><fmt:message key="common.reset"/> </button>
                                             <button class="btn btn-primary"  type="button" onclick="updateTableFilter()"><fmt:message key="costs.filter"/></button>
                                         </div>
                                     </div>
@@ -95,13 +96,13 @@
                         </div>
                     </div>
                 </div>
-                <a class="btn btn-sm btn-info" onclick="add()"><fmt:message key="costs.add"/></a>
+                <a class="btn btn-sm btn-info" onclick="add()"><fmt:message key="common.add"/></a>
                 <p/>
                 <div class="form-group">
                     <div class="btn-group " role="group" aria-label="...">
-                        <button type="button" class="btn btn-primary" onclick="costs_and_incomes()">Summary</button>
-                        <button type="button" class="btn btn-primary" onclick="costs()">Costs</button>
-                        <button type="button" class="btn btn-primary" onclick="incomes()">Incomes</button>
+                        <button type="button" class="btn btn-primary" onclick="costs_and_incomes()"><fmt:message key="common.summary"/></button>
+                        <button type="button" class="btn btn-primary" onclick="costs()"><fmt:message key="common.costs"/></button>
+                        <button type="button" class="btn btn-primary" onclick="incomes()"><fmt:message key="common.incomes"/></button>
                     </div>
                 </div>
                 <hr color="">
@@ -111,7 +112,7 @@
                         <th><fmt:message key="costs.dateTime"/></th>
                         <th><fmt:message key="costs.typeCost"/></th>
                         <th><fmt:message key="costs.amount"/></th>
-                        <th>Cards</th>
+                        <th><fmt:message key="accounts.account"/> </th>
                         <th><fmt:message key="costs.description"/></th>
                         <th></th>
                         <th></th>
@@ -120,7 +121,7 @@
                     <tfoot>
                         <tr>
                             <th></th>
-                            <th>Итого:</th>
+                            <th><fmt:message key="common.total"/> </th>
                             <th id="summ"></th>
                             <th></th>
                             <th></th>
@@ -150,16 +151,16 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h2 class="modal-title"><fmt:message key="costs.edit"/></h2>
+                <h2 class="modal-title" id="modal-title"></h2>
             </div>
             <div class="modal-body">
                 <form class="form-horizontal" method="post" id="detailsForm">
                     <div class="form-group">
-                        <label for="costOrIncome" class="control-label col-xs-3"><fmt:message key="costs.typeCost"/></label>
+                        <label for="costOrIncome" class="control-label col-xs-3"><fmt:message key="common.selectElem"/></label>
 
                         <select class="btn btn-default" id="costOrIncome" onChange="selectCostOrIncome(this.options[this.selectedIndex].value)">
-                            <option value="cost">Cost</option>
-                            <option value="income" selected>Income</option>
+                            <option value="cost"><fmt:message key="costs.cost"/> </option>
+                            <option value="income" selected><fmt:message key="incomes.income"/> </option>
                         </select>
                     </div>
                     <hr color="black"/>
@@ -182,7 +183,7 @@
 
                     <div hidden="hidden" id="incomeTypeSelect">
                         <div class="form-group">
-                            <label for="typeCost" class="control-label col-xs-3"><fmt:message key="costs.typeCost"/></label>
+                            <label for="typeIncome" class="control-label col-xs-3"><fmt:message key="incomes.type"/></label>
 
                             <div class="col-xs-9">
                                 <select class="btn btn-default" name="typeId" id="typeIncome">
@@ -196,7 +197,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="typeCost" class="control-label col-xs-3"><fmt:message key="costs.typeCost"/></label>
+                        <label for="cashAccountsAndCards" class="control-label col-xs-3"><fmt:message key="accounts.type"/></label>
 
                         <div class="col-xs-9">
                             <select class="btn btn-default" name="cashAccountsAndCardsId" id="cashAccountsAndCards">
@@ -248,12 +249,13 @@
     <c:forEach var='key' items='<%=new String[]{"common.update","common.delete","common.deleted","common.saved","common.failed"}%>'>
     i18n['${key}'] = '<fmt:message key="${key}"/>';
     </c:forEach>
-    var edit_title ='<fmt:message key="users.edit"/>';
+    var edit_title ='<fmt:message key="common.edit"/>';
+    var add_title= '<fmt:message key="common.add"/>';
 </script>
 <script type="text/javascript" src="webjars/jquery/2.2.4/jquery.min.js"></script>
 <script type="text/javascript" src="webjars/bootstrap/3.3.7-1/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="webjars/datatables/1.10.12/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="webjars/noty/2.3.8/js/noty/packaged/jquery.noty.packaged.min.js"></script>
-<script type="text/javascript" src="resources/js/datatablesUtil.js"></script>
+<script type="text/javascript" src="resources/js/datatablesUtilMain.js"></script>
 <script type="text/javascript" src="resources/js/datatablesCost.js"></script>
 </html>

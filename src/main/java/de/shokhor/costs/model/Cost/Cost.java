@@ -1,6 +1,7 @@
 package de.shokhor.costs.model.Cost;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import de.shokhor.costs.model.BaseEntity;
 import de.shokhor.costs.model.CashAccountsAndCards;
 import de.shokhor.costs.model.User.User;
@@ -25,7 +26,13 @@ import java.time.LocalDate;
             "AND c.date BETWEEN :startDate AND :endDate"),
     @NamedQuery(name = Cost.MIN_DATE, query = "SELECT min(c.date) FROM Cost c WHERE c.user.id=:userId"),
     @NamedQuery(name = Cost.MAX_DATE, query = "SELECT max (c.date) FROM Cost c WHERE c.user.id=:userId"),
-    @NamedQuery(name = Cost.GET_BETWEEN, query = "SELECT c FROM  Cost c WHERE c.user.id=:userId AND c.date BETWEEN :startDate AND :endDate")
+    @NamedQuery(name = Cost.GET_BETWEEN, query = "SELECT c FROM  Cost c WHERE c.user.id=:userId AND c.date BETWEEN :startDate AND :endDate"),
+    @NamedQuery(name = Cost.GET_BETWEEN_BY_TYPE, query = "SELECT c FROM Cost c WHERE c.user.id=:userId AND c.typeCost.id=:typeCostId " +
+            "AND c.date BETWEEN :startDate AND :endDate"),
+    @NamedQuery(name = Cost.GET_BETWEEN_BY_CARDS, query = "SELECT c FROM Cost c WHERE c.user.id=:userId AND c.cashAccountsAndCards.id=:cashAccountsAndCardsId " +
+                "AND c.date BETWEEN :startDate AND :endDate"),
+    @NamedQuery(name = Cost.GET_BETWEEN_BY_TYPE_CARDS, query = "SELECT c FROM Cost c WHERE c.user.id=:userId AND c.cashAccountsAndCards.id=:cashAccountsAndCardsId " +
+                "AND c.typeCost.id=:typeCostId AND c.date BETWEEN :startDate AND :endDate")
 })
 @Entity
 @Table(name = "cost")
@@ -35,9 +42,12 @@ public class Cost extends BaseEntity {
     public static final String ALL_SORTED = "Cost.getAll";
     public static final String BY_GROUP = "Cost.getByGroup";
     public static final String FILTER="Cost.filter";
-    public static final String MIN_DATE = "Cost.min_date";
-    public static final String MAX_DATE = "Cost.max_date";
-    public static final String GET_BETWEEN="Cost.get_between";
+    public static final String MIN_DATE = "Cost.minDate";
+    public static final String MAX_DATE = "Cost.maxDate";
+    public static final String GET_BETWEEN="Cost.getBetween";
+    public static final String GET_BETWEEN_BY_TYPE = "Cost.getBetweenByType";
+    public static final String GET_BETWEEN_BY_CARDS = "Cost.getBetweenByCards";
+    public static final String GET_BETWEEN_BY_TYPE_CARDS = "Cost.getBetweenByTypeAndCards";
 
 
     @Column(name = "amount")
@@ -52,8 +62,9 @@ public class Cost extends BaseEntity {
     @Column(name = "description")
     private String description;
 
-    @ManyToOne (fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
+    @JsonIgnore
     private User user;
 
     @ManyToOne (fetch = FetchType.EAGER)

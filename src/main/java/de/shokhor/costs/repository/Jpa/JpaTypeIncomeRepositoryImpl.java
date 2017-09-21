@@ -23,6 +23,7 @@ public class JpaTypeIncomeRepositoryImpl implements TypeIncomeRepository {
     @Transactional
     public TypeIncome save(TypeIncome typeIncome, int userId) {
 
+        typeIncome.setUser(em.getReference(User.class, userId));
         if (typeIncome.isNew())
         {
             em.persist(typeIncome);

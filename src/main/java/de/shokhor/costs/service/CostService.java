@@ -34,4 +34,10 @@ public interface CostService {
     LocalDate minDate(int userId);
 
     LocalDate maxDate(int userId);
+
+    List<Cost> getBetweenByType(int userId, Integer typeCostId, LocalDate startDate, LocalDate endDate);
+
+    List<Cost> getBetweenByCards(int userId, Integer cashAccountsAndCardsId, LocalDate startDate, LocalDate endDate);
+
+    List<Cost> getBetweenByTypeAndCards(int userId, Integer cashAccountsAndCardsId, Integer typeCostId, LocalDate startDate, LocalDate endDate);
 }

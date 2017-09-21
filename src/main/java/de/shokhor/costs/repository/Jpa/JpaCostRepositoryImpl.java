@@ -83,17 +83,20 @@ public class JpaCostRepositoryImpl implements CostRepository {
                 .executeUpdate()!=0;
     }
 
+    @Override
     public Cost get(int costId, int userId) {
         Cost cost = em.find(Cost.class, costId);
         return cost!=null && cost.getUser().getId()==userId ? cost : null;
     }
 
+    @Override
     public List<Cost> getAll(int userId) {
         return em.createNamedQuery(Cost.ALL_SORTED,Cost.class)
                 .setParameter("userId",userId)
                 .getResultList();
     }
 
+    @Override
     public List<Cost> getAllByGroup(int userId, int groupId)
     {
         return em.createNamedQuery(Cost.BY_GROUP,Cost.class)
@@ -133,5 +136,36 @@ public class JpaCostRepositoryImpl implements CostRepository {
         return em.createNamedQuery(Cost.MAX_DATE, LocalDate.class)
                 .setParameter("userId", userId)
                 .getSingleResult();
+    }
+
+    @Override
+    public List<Cost> getBetweenByType(int userId, Integer typeCostId, LocalDate startDate, LocalDate endDate) {
+        return em.createNamedQuery(Cost.GET_BETWEEN_BY_TYPE, Cost.class)
+                .setParameter("userId", userId)
+                .setParameter("typeCostId", typeCostId)
+                .setParameter("startDate", startDate)
+                .setParameter("endDate", endDate)
+                .getResultList();
+    }
+
+    @Override
+    public List<Cost> getBetweenByCards(int userId, Integer cashAccountsAndCardsId, LocalDate startDate, LocalDate endDate) {
+        return em.createNamedQuery(Cost.GET_BETWEEN_BY_CARDS, Cost.class)
+                .setParameter("userId", userId)
+                .setParameter("cashAccountsAndCardsId", cashAccountsAndCardsId)
+                .setParameter("startDate", startDate)
+                .setParameter("endDate", endDate)
+                .getResultList();
+    }
+
+    @Override
+    public List<Cost> getBetweenByTypeAndCards(int userId, Integer cashAccountsAndCardsId, Integer typeCostId, LocalDate startDate, LocalDate endDate) {
+        return em.createNamedQuery(Cost.GET_BETWEEN_BY_TYPE_CARDS, Cost.class)
+                .setParameter("userId", userId)
+                .setParameter("cashAccountsAndCardsId", cashAccountsAndCardsId)
+                .setParameter("typeCostId", typeCostId)
+                .setParameter("startDate", startDate)
+                .setParameter("endDate", endDate)
+                .getResultList();
     }
 }

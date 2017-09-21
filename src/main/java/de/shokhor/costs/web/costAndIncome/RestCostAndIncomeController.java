@@ -16,13 +16,13 @@ public class RestCostAndIncomeController extends AbstractCostAndIncomeController
     @GetMapping("/{id}")
     public Cost get (@PathVariable("id") int id)
     {
-        return super.get(id);
+        return super.getCost(id);
     }
 
     @DeleteMapping("/{id}")
     public void delete (@PathVariable("id") int id)
     {
-        super.delete(id);
+        super.costDelete(id);
     }
 
     @GetMapping

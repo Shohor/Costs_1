@@ -41,4 +41,14 @@ public class CashAccountsAndCardsServiceImpl implements CashAccountsAndCardsServ
     public List<CashAccountsAndCards> getAll(int userId) {
         return repository.getAll(userId);
     }
+
+    @Override
+    public Double summIncome(int id, int userId) {
+        return repository.summIncome(id, userId);
+    }
+
+    @Override
+    public Double summCost(int id, int userId) {
+        return repository.summCost(id, userId);
+    }
 }

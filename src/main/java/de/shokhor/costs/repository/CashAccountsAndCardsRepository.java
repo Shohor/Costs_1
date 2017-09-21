@@ -13,4 +13,8 @@ public interface CashAccountsAndCardsRepository {
     CashAccountsAndCards get(int id, int userId);
 
     List<CashAccountsAndCards> getAll (int userId);
+
+    Double summIncome(int id, int userId);
+
+    Double summCost(int id, int userId);
 }

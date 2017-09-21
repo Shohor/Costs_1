@@ -76,15 +76,30 @@ public class CostServiceImpl implements CostService {
     public List<Cost> getBetween(int userId, LocalDate startDate, LocalDate endDate) {
         return repository.getBetween(userId, startDate, endDate);
     }
-    @Cacheable("date")
+    /*@Cacheable("date")*/
     @Override
     public LocalDate minDate(int userId) {
         return repository.minDate(userId);
     }
 
-    @Cacheable("date")
+    /*@Cacheable("date")*/
     @Override
     public LocalDate maxDate(int userId) {
         return repository.maxDate(userId);
+    }
+
+    @Override
+    public List<Cost> getBetweenByType(int userId, Integer typeCostId, LocalDate startDate, LocalDate endDate) {
+        return repository.getBetweenByType(userId, typeCostId, startDate, endDate);
+    }
+
+    @Override
+    public List<Cost> getBetweenByCards(int userId, Integer cashAccountsAndCardsId, LocalDate startDate, LocalDate endDate) {
+        return repository.getBetweenByCards(userId, cashAccountsAndCardsId, startDate, endDate);
+    }
+
+    @Override
+    public List<Cost> getBetweenByTypeAndCards(int userId, Integer cashAccountsAndCardsId, Integer typeCostId, LocalDate startDate, LocalDate endDate) {
+        return repository.getBetweenByTypeAndCards(userId, cashAccountsAndCardsId, typeCostId, startDate, endDate);
     }
 }

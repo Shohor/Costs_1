@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Created by user on 11.07.2017.
  */
-public interface GroupService {
+public interface TypeCostService {
     TypeCost save (TypeCost typeCost, int userId);
 
     TypeCost update (TypeCost typeCost, int userId);

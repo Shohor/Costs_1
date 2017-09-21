@@ -5,7 +5,7 @@ import de.shokhor.costs.model.Cost.Cost;
 import de.shokhor.costs.model.Cost.TypeCost;
 import de.shokhor.costs.model.Income.Income;
 import de.shokhor.costs.service.CostService;
-import de.shokhor.costs.service.GroupService;
+import de.shokhor.costs.service.TypeCostService;
 import de.shokhor.costs.service.IncomeService;
 import de.shokhor.costs.to.CostTo;
 import de.shokhor.costs.to.IncomeTo;
@@ -27,7 +27,7 @@ public abstract class AbstractCostAndIncomeController {
     private IncomeService incomeService;
 
     @Autowired
-    private GroupService groupService;
+    private TypeCostService typeCostService;
 
     public void costDelete(int id)
     {
@@ -105,7 +105,7 @@ public abstract class AbstractCostAndIncomeController {
     {
         int userId = AuthorizedUser.id();
         LOG.info("Get all costs for User{}", userId);
-        return groupService.getAll(userId);
+        return typeCostService.getAll(userId);
     }
 
     public List<Income> getAllIncomes()
@@ -137,26 +137,81 @@ public abstract class AbstractCostAndIncomeController {
         return  costService.getFilteredList(userId, groupId, startDate, endDate);
     }
 
-    public List<Cost> getBetween (LocalDate startDate, LocalDate endDate)
+    public List<Cost> getBetweenCost (LocalDate startDate, LocalDate endDate)
     {
         int userId=AuthorizedUser.id();
         LOG.info("Filtered costAndIncome for User{}, startDate{}, endDate{}", userId,startDate,endDate);
         return  costService.getBetween(userId, startDate, endDate);
     }
 
+    public List<Income> getBetweenIncome(LocalDate startDate, LocalDate endDate) {
+        int userId=AuthorizedUser.id();
+        LOG.info("Filtered costAndIncome for User{}, startDate{}, endDate{}", userId,startDate,endDate);
+        return  incomeService.getBetween(userId, startDate, endDate);
+    }
 
-    public LocalDate minDate()
+    public LocalDate minDateCost()
     {
         int userId = AuthorizedUser.id();
         LOG.info("Minimum date for User{}", userId);
         return costService.minDate(userId);
     }
 
-    public LocalDate maxDate()
+    public LocalDate maxDateCost()
     {
         int userId = AuthorizedUser.id();
         LOG.info("Maximum date for User{}", userId);
         return costService.maxDate(userId);
     }
 
+    public LocalDate minDateIncome()
+    {
+        int userId = AuthorizedUser.id();
+        LOG.info("Minimum date for User{}", userId);
+        return incomeService.minDate(userId);
+    }
+
+    public LocalDate maxDateIncome()
+    {
+        int userId = AuthorizedUser.id();
+        LOG.info("Maximum date for User{}", userId);
+        return incomeService.maxDate(userId);
+    }
+
+    public List<Income> getBetweenIncomeByType(Integer typeIncomeId, LocalDate startDate, LocalDate endDate) {
+        int userId = AuthorizedUser.id();
+        LOG.info("Get income for User{} and Type{}", userId, typeIncomeId);
+        return incomeService.getBetweenByType(userId, typeIncomeId, startDate, endDate);
+    }
+
+    public List<Cost> getBetweenCostByType(Integer typeCostId, LocalDate startDate, LocalDate endDate) {
+        int userId = AuthorizedUser.id();
+        LOG.info("Get cost for User{} and Type{}", userId, typeCostId);
+        return costService.getBetweenByType(userId, typeCostId, startDate, endDate);
+    }
+
+    public List<Income> getBetweenIncomeByTypeAndCards(Integer cashAccountsAndCardsId, Integer typeIncomeId, LocalDate startDate, LocalDate endDate) {
+        int userId = AuthorizedUser.id();
+        LOG.info("Get income for User{} and Type{} and CashAccountsAndCards{}", userId, typeIncomeId, cashAccountsAndCardsId);
+        return incomeService.getBetweenByTypeAndCards(userId, cashAccountsAndCardsId, typeIncomeId, startDate, endDate);
+
+    }
+
+    public List<Cost> getBetweenCostByCards(Integer cashAccountsAndCardsId, LocalDate startDate, LocalDate endDate) {
+        int userId = AuthorizedUser.id();
+        LOG.info("Get cost for User{} and CashAccountsAndCards{}", userId, cashAccountsAndCardsId);
+        return costService.getBetweenByCards(userId, cashAccountsAndCardsId, startDate, endDate);
+    }
+
+    public List<Income> getBetweenIncomeByCards(Integer cashAccountsAndCardsId, LocalDate startDate, LocalDate endDate) {
+        int userId = AuthorizedUser.id();
+        LOG.info("Get income for User{} and CashAccountsAndCards{}", userId, cashAccountsAndCardsId);
+        return incomeService.getBetweenByCards(userId, cashAccountsAndCardsId, startDate, endDate);
+    }
+
+    public List<Cost> getBetweenCostByTypeAndCards(Integer cashAccountsAndCardsId, Integer typeCostId, LocalDate startDate, LocalDate endDate) {
+        int userId = AuthorizedUser.id();
+        LOG.info("Get income for User{} and Type{} and CashAccountsAndCards{}", userId, typeCostId, cashAccountsAndCardsId);
+        return costService.getBetweenByTypeAndCards(userId, cashAccountsAndCardsId, typeCostId, startDate, endDate);
+    }
 }

@@ -12,7 +12,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -96,26 +95,78 @@ public class AjaxCostAndIncomeController extends AbstractCostAndIncomeController
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PostMapping(value = "/filter", produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Cost> filter(@RequestParam(value = "typeIncomeId", required = false) Integer typeIncomeId,
-                             @RequestParam(value = "typeCostId", required = false) Integer typeCostId,
-                             @RequestParam(value = "cashAccountsAndCardsId", required = false) Integer cashAccountsAndCardsId,
-                             @RequestParam(value = "startDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
-                             @RequestParam(value = "endDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate)
+    @PostMapping(value = "/incomeAndCost/filter", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<IncomeAndCostTo> filter(@RequestParam(value = "typeIncomeId", required = false) Integer typeIncomeId,
+                              @RequestParam(value = "typeCostId", required = false) Integer typeCostId,
+                              @RequestParam(value = "cashAccountsAndCardsId", required = false) Integer cashAccountsAndCardsId,
+                              @RequestParam(value = "startDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+                              @RequestParam(value = "endDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate)
     {
-        if (startDate==null)
-        {
-            startDate=super.minDate();
+        if (startDate == null) {
+            startDate = super.minDateCost().isBefore(super.minDateIncome())?super.minDateCost():super.minDateIncome();
         }
-        if (endDate==null)
-        {
-            endDate=super.maxDate();
+        if (endDate == null) {
+            endDate = super.maxDateCost().isAfter(super.maxDateIncome())?super.maxDateCost():super.maxDateIncome();
         }
-        if (cashAccountsAndCardsId==null)
-        {
-            return super.getBetween(startDate,endDate);
+        if (cashAccountsAndCardsId == null) {
+            return IncomeAndCostUtil.transferIncomeAndCost(super.getBetweenCost(startDate, endDate), super.getBetweenIncome(startDate, endDate));
         }
+        else {
+            return IncomeAndCostUtil.transferIncomeAndCost(super.getBetweenCostByCards(cashAccountsAndCardsId, startDate, endDate), super.getBetweenIncomeByCards(cashAccountsAndCardsId, startDate, endDate));
+        }
+    }
 
-        return super.filter(cashAccountsAndCardsId, startDate, endDate);
+    @PostMapping(value = "/Cost/filter", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<CostTo> filterCost(@RequestParam(value = "typeIncomeId", required = false) Integer typeIncomeId,
+                                        @RequestParam(value = "typeCostId", required = false) Integer typeCostId,
+                                        @RequestParam(value = "cashAccountsAndCardsId", required = false) Integer cashAccountsAndCardsId,
+                                        @RequestParam(value = "startDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+                                        @RequestParam(value = "endDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate)
+    {
+        if (startDate == null) {
+            startDate = super.minDateCost().isBefore(super.minDateIncome())?super.minDateCost():super.minDateIncome();
+        }
+        if (endDate == null) {
+            endDate = super.maxDateCost().isAfter(super.maxDateIncome())?super.maxDateCost():super.maxDateIncome();
+        }
+        if (cashAccountsAndCardsId == null && typeCostId==null) {
+            return CostUtil.createCostTofromCost(super.getBetweenCost(startDate, endDate));
+        }
+        else if (cashAccountsAndCardsId==null){
+            return CostUtil.createCostTofromCost(super.getBetweenCostByType(typeCostId, startDate, endDate));
+        }
+        else if (typeCostId==null) {
+            return CostUtil.createCostTofromCost(super.getBetweenCostByCards(cashAccountsAndCardsId,startDate,endDate));
+        }
+        else {
+            return CostUtil.createCostTofromCost(super.getBetweenCostByTypeAndCards(cashAccountsAndCardsId, typeCostId, startDate, endDate));
+        }
+    }
+
+    @PostMapping(value = "/Income/filter", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<IncomeTo> filterIncome(@RequestParam(value = "typeIncomeId", required = false) Integer typeIncomeId,
+                                        @RequestParam(value = "typeCostId", required = false) Integer typeCostId,
+                                        @RequestParam(value = "cashAccountsAndCardsId", required = false) Integer cashAccountsAndCardsId,
+                                        @RequestParam(value = "startDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+                                        @RequestParam(value = "endDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate)
+    {
+        if (startDate == null) {
+            startDate = super.minDateCost().isBefore(super.minDateIncome())?super.minDateCost():super.minDateIncome();
+        }
+        if (endDate == null) {
+            endDate = super.maxDateCost().isAfter(super.maxDateIncome())?super.maxDateCost():super.maxDateIncome();
+        }
+        if (cashAccountsAndCardsId == null && typeCostId==null) {
+            return IncomeUtil.createCostTofromCost(super.getBetweenIncome(startDate, endDate));
+        }
+        else if (cashAccountsAndCardsId==null){
+            return IncomeUtil.createCostTofromCost(super.getBetweenIncomeByType(typeIncomeId, startDate, endDate));
+        }
+        else if (typeIncomeId==null) {
+            return IncomeUtil.createCostTofromCost(super.getBetweenIncomeByCards(cashAccountsAndCardsId,startDate,endDate));
+        }
+        else {
+            return IncomeUtil.createCostTofromCost(super.getBetweenIncomeByTypeAndCards(cashAccountsAndCardsId, typeIncomeId, startDate, endDate));
+        }
     }
 }

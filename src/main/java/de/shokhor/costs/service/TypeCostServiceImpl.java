@@ -13,7 +13,7 @@ import java.util.List;
  * Created by user on 12.07.2017.
  */
 @Service
-public class GroupServiceImpl implements GroupService {
+public class TypeCostServiceImpl implements TypeCostService {
 
     @Autowired
     public GroupRepository repository;

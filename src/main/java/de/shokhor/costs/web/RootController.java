@@ -1,11 +1,8 @@
 package de.shokhor.costs.web;
 
 import de.shokhor.costs.AuthorizedUser;
-import de.shokhor.costs.model.Income.Income;
-import de.shokhor.costs.model.Income.TypeIncome;
 import de.shokhor.costs.model.User.User;
 import de.shokhor.costs.service.*;
-import de.shokhor.costs.util.IncomeAndCostUtil;
 import de.shokhor.costs.web.user.AbstractUserController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,13 +12,11 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 
-import java.util.List;
-
 @Controller
 public class RootController extends AbstractUserController {
 
     @Autowired
-    private GroupService groupService;
+    private TypeCostService typeCostService;
 
     @Autowired
     private TypeIncomeService typeIncomeService;
@@ -40,6 +35,9 @@ public class RootController extends AbstractUserController {
     {
         return "users";
     }
+
+    @GetMapping("/accounts")
+    public String accounts(){return "accounts";}
 
     @GetMapping(value = "/login")
     public String login(ModelMap model,
@@ -68,7 +66,7 @@ public class RootController extends AbstractUserController {
     {
         /*List<Income> incomes=incomeService.getAll(AuthorizedUser.id());
         model.addAttribute("costList", IncomeAndCostUtil.transferIncomeAndCost(costService.getAll(AuthorizedUser.id()), incomes));*/
-        model.addAttribute("typeCostList", groupService.getAll(AuthorizedUser.id()));
+        model.addAttribute("typeCostList", typeCostService.getAll(AuthorizedUser.id()));
         model.addAttribute("typeIncomeList", typeIncomeService.getAll(AuthorizedUser.id()));
         model.addAttribute("CashAccountsAndCardsList", cashAccountsAndCardsService.getAll(AuthorizedUser.id()));
         return "costs";
