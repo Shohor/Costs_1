@@ -51,11 +51,12 @@
                 <form class="form-horizontal" method="post" id="detailsForm">
                     <input type="text" hidden="hidden" id="id" name="id"/>
 
+                    <label for="type" class="control-label col-xs-3"><fmt:message key="accounts.type"/></label>
                     <div class="form-group">
-                        <select class="btn btn-default" name="cashAccountsAndCardsId" id="type">
-                            <c:forEach items="${CashAccountsAndCardsList}" var="cashAccountsAndCards">
-                                <jsp:useBean id="cashAccountsAndCards" scope="page" type="de.shokhor.costs.model.CashAccountsAndCards"/>
-                                <option name="type" value="${cashAccountsAndCards.id}">${cashAccountsAndCards.type}</option>
+                        <select class="btn btn-default" name="type" id="type">
+                            <c:forEach items="${CashAccontAndCardsTypes}" var="cashAccountsAndCards">
+                                <jsp:useBean id="cashAccountsAndCards" scope="page" type="de.shokhor.costs.model.TypeCashAccountsAndCards"/>
+                                <option name="type" value="${cashAccountsAndCards.name()}">${cashAccountsAndCards.name()}</option>
                             </c:forEach>
                         </select>
                     </div>
@@ -79,16 +80,6 @@
     </div>
 </div>
 </body>
-<script type="text/javascript">
-    var i18n = [];
-    <c:forEach var='key' items='<%=new String[]{"common.update","common.delete","common.deleted","common.saved","common.failed"}%>'>
-    i18n['${key}'] = '<fmt:message key="${key}"/>';
-    </c:forEach>
-    var edit_title ='<fmt:message key="common.edit"/>';
-    var add_title= '<fmt:message key="common.add"/>';
-</script>
-<script type="text/javascript" src="webjars/jquery/2.2.4/jquery.min.js"></script>
-<script type="text/javascript" src="webjars/bootstrap/3.3.7-1/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="webjars/datatables/1.10.12/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="webjars/noty/2.3.8/js/noty/packaged/jquery.noty.packaged.min.js"></script>
 <script type="text/javascript" src="resources/js/datatablesUtilAccount.js"></script>

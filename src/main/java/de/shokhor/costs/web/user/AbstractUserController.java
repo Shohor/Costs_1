@@ -1,11 +1,14 @@
 package de.shokhor.costs.web.user;
 
+import de.shokhor.costs.model.User.Role;
 import de.shokhor.costs.model.User.User;
 import de.shokhor.costs.service.UserService;
+import de.shokhor.costs.util.PasswordUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.EnumSet;
 import java.util.List;
 
 public abstract class AbstractUserController {
@@ -42,6 +45,8 @@ public abstract class AbstractUserController {
     public User create(User user)
     {
         user.setId(null);
+        user.setEmail(user.getEmail().toLowerCase());
+        user.setPassword(PasswordUtil.encode(user.getPassword()));
         LOG.info("Create user");
         return service.save(user);
     }
@@ -51,5 +56,10 @@ public abstract class AbstractUserController {
         user.setId(id);
         LOG.info("Update User{}",id);
         return service.save(user);
+    }
+
+    public void enable(int id, boolean enabled) {
+        LOG.info((enabled ? "enable " : "disable ") + id);
+        service.enable(id, enabled);
     }
 }

@@ -31,7 +31,7 @@ public class AjaxAccountsController extends AbstractAccountsController {
         return super.get(id);
     }
 
-    @PostMapping
+    /*@PostMapping
     public ResponseEntity<String> updateOrCreate(@Valid CashAccountsAndCards cashAccountsAndCards, BindingResult result){
         if (result.hasErrors())
         {
@@ -45,6 +45,19 @@ public class AjaxAccountsController extends AbstractAccountsController {
             super.update(cashAccountsAndCards);
         }
         return new ResponseEntity<>(HttpStatus.OK);
+    }*/
+
+    @PostMapping
+    public void updateOrCreate(@RequestParam(value = "id", required = false) Integer id,
+                               @RequestParam(value = "type") String type,
+                               @RequestParam(value = "description", required = false) String description){
+        if (id==null) {
+            CashAccountsAndCards cashAccountsAndCards = new CashAccountsAndCards(description, type);
+            super.create(cashAccountsAndCards);
+        } else {
+            CashAccountsAndCards cashAccountsAndCards = new CashAccountsAndCards(id, description, type);
+            super.update(cashAccountsAndCards);
+        }
     }
 
     @DeleteMapping(value = "/{id}")

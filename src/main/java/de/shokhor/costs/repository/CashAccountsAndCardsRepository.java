@@ -1,8 +1,10 @@
 package de.shokhor.costs.repository;
 
 import de.shokhor.costs.model.CashAccountsAndCards;
+import de.shokhor.costs.model.TypeCashAccountsAndCards;
 
 import java.util.List;
+import java.util.Set;
 
 public interface CashAccountsAndCardsRepository {
 

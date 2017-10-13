@@ -36,9 +36,9 @@ public class CashAccountsAndCards extends BaseEntity {
     private double amount;
 
     @Enumerated(EnumType.STRING)
+    @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "type_cash_accounts_and_cards", joinColumns = @JoinColumn(name = "cash_accounts_and_cards_id"))
     @Column(name = "type")
-    @ElementCollection(fetch = FetchType.EAGER)
     private Set<TypeCashAccountsAndCards> type;
 
     @Column(name = "description")
@@ -58,6 +58,17 @@ public class CashAccountsAndCards extends BaseEntity {
     private User user;
 
     public CashAccountsAndCards() {
+    }
+    public CashAccountsAndCards(String description, String type) {
+        super();
+        this.type = EnumSet.of(Enum.valueOf(TypeCashAccountsAndCards.class, type));
+        this.description = description;
+    }
+
+    public CashAccountsAndCards(Integer id, String description, String type) {
+        super(id);
+        this.type = EnumSet.of(Enum.valueOf(TypeCashAccountsAndCards.class, type));
+        this.description = description;
     }
 
     public CashAccountsAndCards(Integer id, int amount, String description, TypeCashAccountsAndCards type, TypeCashAccountsAndCards... types) {

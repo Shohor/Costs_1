@@ -5,7 +5,6 @@ function makeEditable() {
     $(document).ajaxError(function (event, jqXHR, options, jsExc) {
         failNoty(event, jqXHR, options, jsExc);
     });
-
 }
 
 function selectCostOrIncome(selectedValue) {
@@ -120,7 +119,7 @@ function incomes() {
 function save() {
     $.ajax({
         type: "POST",
-        url: ajaxUrl+($('#costOrIncome option:selected').text()=='Cost'?'saveCost':'saveIncome'),
+        url: ajaxUrl+($('#costOrIncome option:selected').val()=='cost'?'saveCost':'saveIncome'),
         data: form.serialize(),
         success: function () {
             $('#editRow').modal('hide');
@@ -167,10 +166,5 @@ function renderEditBtn(data, type, row) {
 function renderDeleteBtn(data, type, row) {
     if (type == 'display') {
         return '<a class="btn btn-xs btn-danger" onclick="deleteRow(' + row.id +','+row.incomeOrCost+');">'+i18n['common.delete']+'</a>';
-    }
-}
-function renderCostBtn(data, type, row) {
-    if (type == 'display') {
-        return '<a class="btn btn-xs btn-default" href="costs">'+i18n['users.costs']+'</a>';
     }
 }

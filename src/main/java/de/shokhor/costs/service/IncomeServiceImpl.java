@@ -31,7 +31,6 @@ public class IncomeServiceImpl implements IncomeService{
         return ExceptionUtil.checkNotFoundWithId(repository.save(income, userId), income.getId());
     }
 
-    @CacheEvict
     @Override
     public void delete(int id, int userId) {
         ExceptionUtil.checkNotFoundWithId(repository.delete(id, userId),id);
@@ -47,14 +46,12 @@ public class IncomeServiceImpl implements IncomeService{
         return repository.getAll(userId);
     }
 
-    @CacheEvict
     @Override
     public Income save(IncomeTo incomeTo, int userId) {
         Assert.notNull(incomeTo, "Income must be not null");
         return repository.save(incomeTo, userId);
     }
 
-    @CacheEvict
     @Override
     public Income update(IncomeTo incomeTo, int userId) {
         Assert.notNull(incomeTo, "Income must be not null");

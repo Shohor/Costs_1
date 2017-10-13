@@ -1,6 +1,8 @@
 package de.shokhor.costs.web;
 
 import de.shokhor.costs.AuthorizedUser;
+import de.shokhor.costs.model.TypeCashAccountsAndCards;
+import de.shokhor.costs.model.User.Role;
 import de.shokhor.costs.model.User.User;
 import de.shokhor.costs.service.*;
 import de.shokhor.costs.web.user.AbstractUserController;
@@ -11,6 +13,11 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
+
+import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.EnumSet;
 
 @Controller
 public class RootController extends AbstractUserController {
@@ -37,7 +44,11 @@ public class RootController extends AbstractUserController {
     }
 
     @GetMapping("/accounts")
-    public String accounts(){return "accounts";}
+    public String accounts(Model model) {
+        model.addAttribute("CashAccountsAndCardsList", cashAccountsAndCardsService.getAll(AuthorizedUser.id()));
+        model.addAttribute("CashAccontAndCardsTypes", Arrays.asList(TypeCashAccountsAndCards.values()));
+        return "accounts";
+    }
 
     @GetMapping(value = "/login")
     public String login(ModelMap model,
@@ -105,11 +116,11 @@ public class RootController extends AbstractUserController {
             model.addAttribute("register", true);
             return "profile";
         } else {
+            user.setRegistred(LocalDateTime.now());
+            user.setRole(EnumSet.of(Role.ROLE_USER));
             super.create(user);
             status.setComplete();
             return "redirect:login?message=app.registered";
         }
     }
-
-
 }

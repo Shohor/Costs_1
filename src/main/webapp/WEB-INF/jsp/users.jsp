@@ -20,6 +20,7 @@
                                     <th><fmt:message key="users.sirname"/></th>
                                     <th><fmt:message key="users.age"/></th>
                                     <th><fmt:message key="users.email"/></th>
+                                    <th><fmt:message key="users.enabled"/></th>
                                     <th><fmt:message key="users.date"/></th>
                                     <th><fmt:message key="users.roles"/></th>
                                     <th></th>
@@ -59,7 +60,7 @@
                         <form class="form-horizontal" method="post" id="detailsForm">
                             <input type="text" hidden="hidden" id="id" name="id">
 
-                            <div class="form-typeCost">
+                            <div class="form-group">
                                 <label for="firstName" class="control-label col-xs-3"><fmt:message key="users.name"/></label>
 
                                 <div class="col-xs-9">
@@ -67,7 +68,7 @@
                                 </div>
                             </div>
 
-                            <div class="form-typeCost">
+                            <div class="form-group">
                                 <label for="sirname" class="control-label col-xs-3"><fmt:message key="users.sirname"/></label>
 
                                 <div class="col-xs-9">
@@ -75,7 +76,7 @@
                                 </div>
                             </div>
 
-                            <div class="form-typeCost">
+                            <div class="form-group">
                                 <label for="age" class="control-label col-xs-3"><fmt:message key="users.age"/></label>
 
                                 <div class="col-xs-9">
@@ -83,7 +84,7 @@
                                 </div>
                             </div>
 
-                            <div class="form-typeCost">
+                            <div class="form-group">
                                 <label for="email" class="control-label col-xs-3"><fmt:message key="users.email"/></label>
 
                                 <div class="col-xs-9">
@@ -91,7 +92,7 @@
                                 </div>
                             </div>
 
-                            <div class="form-typeCost">
+                            <div class="form-group">
                                 <label for="password" class="control-label col-xs-3"><fmt:message key="users.password"/></label>
 
                                 <div class="col-xs-9">
@@ -99,7 +100,7 @@
                                 </div>
                             </div>
 
-                            <div class="form-typeCost">
+                            <div class="form-group">
                                 <div class="col-xs-offset-3 col-xs-9">
                                     <button type="button" class="btn btn-primary" onclick="save()"><fmt:message key="common.save"/></button>
                                 </div>
@@ -109,18 +110,10 @@
                 </div>
             </div>
         </div>
+        <jsp:include page="fragments/footer.jsp"/>
     </body>
-    <script type="text/javascript">
-        var i18n = [];
-        <c:forEach var='key' items='<%=new String[]{"users.costs","common.update","common.delete","common.deleted","common.saved","common.failed"}%>'>
-            i18n['${key}'] = '<fmt:message key="${key}"/>';
-        </c:forEach>
-        var edit_title ='<fmt:message key="users.edit"/>';
-    </script>
-    <script type="text/javascript" src="webjars/jquery/2.2.4/jquery.min.js"></script>
-    <script type="text/javascript" src="webjars/bootstrap/3.3.7-1/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="webjars/datatables/1.10.12/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="webjars/noty/2.3.8/js/noty/packaged/jquery.noty.packaged.min.js"></script>
-    <script type="text/javascript" src="resources/js/datatablesUtilMain.js"></script>
+    <script type="text/javascript" src="resources/js/datatablesUtilUser.js"></script>
     <script type="text/javascript" src="resources/js/datatablesUser.js"></script>
 </html>

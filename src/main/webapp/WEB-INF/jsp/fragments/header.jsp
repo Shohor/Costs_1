@@ -10,19 +10,24 @@
         <a href="costs" class="navbar-brand"><fmt:message key="app.title"/></a>
 
         <div class="collapse navbar-collapse">
-            <form:form class="navbar-form navbar-right" action="logout" method="post">
-                <sec:authorize access="isAuthenticated()">
-                    <sec:authorize access="hasRole('ROLE_ADMIN')">
-                        <a class="btn btn-info" role="button" href="users"><fmt:message key="users.title"/></a>
-                    </sec:authorize>
-                    <c:if test="${pageContext.request.servletPath=='/WEB-INF/jsp/costs.jsp'}">
-                        <a class="btn btn-info" role="button" href="groups"><fmt:message key="users.typeCosts"/></a>
-                        <a class="btn btn-info" role="button" href="accounts"><fmt:message key="common.accounts"/></a>
-                    </c:if>
-                    <a class="btn btn-info" role="button" href="profile">${user.sirname} <fmt:message key="app.profile"/></a>
-                    <input type="submit" class="btn btn-primary" value="<fmt:message key="app.logout"/>">
-                </sec:authorize>
-            </form:form>
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <form:form class="navbar-form navbar-right" action="logout" method="post">
+                        <sec:authorize access="isAuthenticated()">
+                            <sec:authorize access="hasRole('ROLE_ADMIN')">
+                                <a class="btn btn-info" role="button" href="users"><fmt:message key="users.title"/></a>
+                            </sec:authorize>
+                            <c:if test="${pageContext.request.servletPath=='/WEB-INF/jsp/costs.jsp'}">
+                                <a class="btn btn-info" role="button" href="groups"><fmt:message key="users.typeCosts"/></a>
+                                <a class="btn btn-info" role="button" href="accounts"><fmt:message key="common.accounts"/></a>
+                            </c:if>
+                            <a class="btn btn-info" role="button" href="profile">${user.sirname} <fmt:message key="app.profile"/></a>
+                            <input type="submit" class="btn btn-primary" value="<fmt:message key="app.logout"/>">
+                        </sec:authorize>
+                    </form:form>
+                </li>
+                <jsp:include page="lang.jsp"/>
+            </ul>
         </div>
     </div>
 </div>

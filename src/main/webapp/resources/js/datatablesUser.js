@@ -34,6 +34,15 @@ $(function () {
                 }
             },
             {
+                "data": "enabled",
+                "render": function (data, type, row) {
+                    if (type == 'display') {
+                        return '<input type="checkbox" ' + (data ? 'checked' : '') + ' onclick="enable($(this),' + row.id + ');"/>';
+                    }
+                    return data;
+                }
+            },
+            {
                 "data": "registred",
                 "render": function (date, type, row) {
                     if (type == 'display') {

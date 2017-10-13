@@ -66,6 +66,5 @@ public class costServiceTest extends testService {
     {
         List<Cost> costsActual = service.getAll(USER_ID+1);
         MATCHER.assertCollectionEquals(COSTS, costsActual);
-
     }
 }

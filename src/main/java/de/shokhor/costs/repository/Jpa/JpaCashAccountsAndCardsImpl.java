@@ -1,6 +1,7 @@
 package de.shokhor.costs.repository.Jpa;
 
 import de.shokhor.costs.model.CashAccountsAndCards;
+import de.shokhor.costs.model.TypeCashAccountsAndCards;
 import de.shokhor.costs.model.User.User;
 import de.shokhor.costs.repository.CashAccountsAndCardsRepository;
 import org.springframework.stereotype.Repository;
@@ -9,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
+import java.util.Set;
 
 @Repository
 @Transactional(readOnly = true)
@@ -59,17 +61,21 @@ public class JpaCashAccountsAndCardsImpl implements CashAccountsAndCardsReposito
 
     @Override
     public Double summIncome(int id, int userId) {
-        return em.createNamedQuery(CashAccountsAndCards.SUMM_INCOME, Double.class)
+        Double summ = em.createNamedQuery(CashAccountsAndCards.SUMM_INCOME, Double.class)
                 .setParameter("userId", userId)
                 .setParameter("id", id)
                 .getSingleResult();
+        if (summ==null){summ=0.0;}
+        return summ;
     }
 
     @Override
     public Double summCost(int id, int userId) {
-        return em.createNamedQuery(CashAccountsAndCards.SUMM_COST, Double.class)
+        Double summ = em.createNamedQuery(CashAccountsAndCards.SUMM_COST, Double.class)
                 .setParameter("userId", userId)
                 .setParameter("id", id)
                 .getSingleResult();
+        if (summ==null) {summ=0.0;}
+        return summ;
     }
 }
