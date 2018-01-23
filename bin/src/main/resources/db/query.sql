@@ -1,0 +1,1 @@
+SELECT * FROM  cost c WHERE c.user_id=1 AND c.group_id=1 AND c.date BETWEEN 2017-01-01 AND NULL
