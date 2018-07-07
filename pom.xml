@@ -30,7 +30,7 @@
         <hamcrest.version>1.3</hamcrest.version>
 
         <!-- Hibernate -->
-        <hibernate.version>5.2.2.Final</hibernate.version>
+        <hibernate.version>5.2.3.Final</hibernate.version>
         <hibernate-validator.version>5.2.4.Final</hibernate-validator.version>
 
         <!--Tools-->
@@ -171,7 +171,7 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>5.1.39</version>
+            <version>8.0.11</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
@@ -194,6 +194,11 @@
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
             <version>${hibernate.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+            <version>5.2.3.Final</version>
         </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
